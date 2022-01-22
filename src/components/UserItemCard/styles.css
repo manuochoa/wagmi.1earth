@@ -1,0 +1,41 @@
+.item-card {
+  background: var(--alternative-background-active) !important;
+  box-shadow: 0px 21px 69px var(--alternative-background) !important;
+  border-radius: 10px !important;
+  position: relative;
+  min-height: 300px;
+  cursor: pointer;
+  color: var(--main-text);
+}
+
+.item-card .item-number {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+
+.item-card .item-clawcrane {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.item-card .item-image img {
+  width: 150px;
+  height: 150px;
+}
+
+.item-card .item-price {
+  color: var(--main-color);
+}
+
+.item-card .tags > img {
+  width: 20px;
+  height: 20px;
+}
+
+.item-card.bundle-card .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

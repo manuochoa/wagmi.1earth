@@ -1,0 +1,246 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+a {
+}
+
+body {
+  background-color: var(--main-background);
+  color: var(--main-text);
+  font-family: "Poppins", sans-serif;
+}
+
+body .App .container-fluid {
+  padding-left: 370px;
+  padding-right: 20px;
+}
+
+.rarity-badge {
+  border-radius: 25px !important;
+  padding: 4px 15px !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  background-color: #57567b !important;
+  cursor: default;
+}
+
+.nft-Endangered {
+  background-color: #0dc26b !important;
+}
+
+.nft-Shiny {
+  background-color: #6f3cdd !important;
+}
+
+.nft-Unique {
+  background-color: #f3a734 !important;
+}
+
+.nft-sEndangered {
+  background-color: #13b1e6 !important;
+}
+
+.nft-input {
+  background-color: var(--alternative-background) !important;
+  border: 1px solid var(--alternative-background-active) !important;
+  color: var(--main-text) !important;
+  box-shadow: none !important;
+  height: 50px;
+}
+
+.nft-dropdown > button,
+.nft-button {
+  background-color: var(--alternative-background) !important;
+  border: none !important;
+  padding: 10px 16px !important;
+  box-shadow: none !important;
+  width: 100%;
+  color: var(--main-text) !important;
+}
+
+.nft-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nft-button:hover,
+.nft-dropdown .dropdown-menu a:hover,
+.nft-dropdown button:hover {
+  background-color: var(--alternative-background-active) !important;
+}
+
+.nft-dropdown .dropdown-menu {
+  background-color: var(--alternative-background-active);
+  width: 100%;
+  padding: 0;
+}
+
+.nft-dropdown .dropdown-menu a {
+  color: var(--main-text);
+  background-color: var(--alternative-background-active);
+  padding: 10px;
+}
+
+.nft-dropdown .dropdown-toggle::after {
+  display: none;
+}
+
+.nft-dropdown-primary button {
+  background-color: #1a1840 !important;
+  border: 1px solid #312f62 !important;
+  padding: 15px 16px !important;
+  min-width: 150px !important;
+  box-shadow: none !important;
+  color: #9796cf !important;
+}
+
+.nft-dropdown-primary .dropdown-toggle::after {
+  display: none;
+}
+
+.nft-dropdown-primary .dropdown-menu {
+  background-color: #1a1840 !important;
+  border: 1px solid #312f62 !important;
+}
+
+.nft-dropdown-primary .dropdown-menu a {
+  color: #ffffff !important;
+  background-color: #1a1840 !important;
+}
+
+.nft-dropdown-primary .dropdown-menu a:hover {
+  background-color: #141234 !important;
+}
+
+.category-options .category-button {
+  background-color: #1a1840 !important;
+  border: none !important;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  box-shadow: none !important;
+}
+
+.category-options .category-button.active {
+  background-color: #312f62 !important;
+}
+
+.section-header .go-back a {
+  cursor: pointer;
+}
+
+.section-header .go-back a h3 {
+  font-weight: 400;
+  color: #9796cf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-header .go-back a img {
+  max-width: 35px;
+  margin-right: 15px;
+}
+
+.item-preview .item-image > img {
+  width: 200px;
+}
+
+.item-preview .item-number {
+  color: var(--secondary-text);
+  font-size: 20px;
+}
+
+.item-preview .item-name {
+  font-size: 40px;
+}
+
+.item-preview .item-price h1 {
+  color: var(--main-text);
+  font-size: 60px;
+  margin: 0;
+}
+
+.nft-buy-button {
+  background: linear-gradient(
+    127.09deg,
+    var(--secondary-color) -14.32%,
+    var(--main-color) 92.98%
+  ) !important;
+  box-shadow: 0px 4px 31px var(--secondary-color) !important;
+  border-radius: 24px !important;
+  border: none !important;
+  padding: 10px 20px;
+}
+
+.item-preview .info {
+  background: linear-gradient(
+    241.25deg,
+    var(--alternative-background) 4.4%,
+    var(--alternative-background-active) 61.77%
+  );
+  box-shadow: 0px 51px 69px var(--alternative-background);
+  border-radius: 10px;
+  height: 350px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.item-preview .info > h3 {
+  font-size: 25px;
+  color: var(--main-text);
+}
+
+.item-preview .info .info-item {
+  width: 25%;
+  text-transform: capitalize;
+}
+
+.item-preview .info h4 {
+  font-size: 18px;
+  color: var(--main-text);
+  text-transform: uppercase;
+}
+
+.item-preview .info .info-item h6 {
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+}
+
+.item-preview .info .info-item h6 img {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.item-preview .owner-detail .name {
+  color: var(--secondary-text);
+  margin: 0;
+}
+
+.item-preview .owner-detail .id {
+  color: var(--secondary-text);
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.item-preview .info .buyer-title {
+  width: 33.33%;
+}
+.item-preview .info .seller-title {
+  width: 66.66%;
+}
+
+.bundle-item .bundle-image {
+  width: 70px;
+}
+
+.bundle-item .bundle-info .media-icon {
+  width: 22px;
+}
+
+.about-bundle > h6 {
+  font-size: 18px;
+  color: var(--secondary-text);
+  text-transform: uppercase;
+}

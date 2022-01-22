@@ -1,0 +1,47 @@
+.item-card {
+  background: linear-gradient(
+      241.25deg,
+      rgba(41, 39, 85, 0.35) 4.4%,
+      rgba(41, 39, 84, 0.78) 61.77%,
+      rgba(27, 24, 66, 0.35) 119.94%
+    ),
+    #282c3b !important;
+  box-shadow: 0px 51px 69px rgba(23, 18, 43, 0.585739) !important;
+  border-radius: 10px !important;
+  position: relative;
+  min-height: 300px;
+  cursor: pointer;
+}
+
+.item-card .item-number {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+
+.item-card .item-clawcrane {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.item-card .item-image img {
+  width: 150px;
+  height: 150px;
+}
+
+.item-card .item-price {
+  color: #d45fe0;
+}
+
+.item-card .tags > img {
+  width: 20px;
+  height: 20px;
+}
+
+.item-card.bundle-card .card-body {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

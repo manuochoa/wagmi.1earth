@@ -1,0 +1,49 @@
+.nft-img-dropdown button {
+  background-color: var(--alternative-background) !important;
+  color: var(--highligth-text) !important;
+  box-shadow: none !important;
+  border: 1px solid var(--alternative-background-active) !important;
+}
+
+.nft-img-dropdown button span {
+  display: flex;
+  align-items: center;
+}
+
+.nft-img-dropdown button span > div {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  margin-left: 10px;
+}
+
+.nft-img-dropdown button span > div h5 {
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.nft-img-dropdown button span > div h6 {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.nft-img-dropdown button.dropdown-toggle::after {
+  display: none !important;
+}
+
+.nft-img-dropdown .dropdown-menu {
+  background-color: var(--alternative-background) !important;
+  border: 1px solid var(--alternative-background-active) !important;
+}
+
+.nft-img-dropdown .dropdown-menu a {
+  color: var(--main-text) !important;
+}
+.nft-img-dropdown .dropdown-menu a:hover {
+  background-color: var(--alternative-background) !important;
+}
+
+header .nft-button {
+  width: auto !important;
+  padding: 6px 16px !important;
+}

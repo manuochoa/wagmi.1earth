@@ -1,0 +1,170 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  min-height: 100vh !important;
+  width: 350px !important;
+  z-index: 100;
+  padding: 20px 0 !important;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+  background-color: var(--secondary-background);
+}
+
+.text-nft-light {
+  color: var(--main-text);
+}
+
+.sidebar .nft-logo img {
+  width: 150px;
+}
+
+.sidebar .nft-logo a {
+  cursor: pointer;
+}
+
+.sidebar .nav-tabs {
+  border: none;
+  background-color: var(--secondary-color);
+  border-radius: 24px;
+}
+
+.sidebar .nav-tabs .nav-link {
+  border-radius: 24px;
+  background-color: var(--secondary-color);
+  color: var(--secondary-text);
+  border: none !important;
+  width: 115px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+
+.sidebar .nav-tabs .nav-link.active {
+  color: var(--main-text);
+  background: var(--main-color);
+  border: none !important;
+}
+
+.sidebar .items-tab .nav-tabs {
+  border-bottom: 1px solid var(--secondary-background);
+}
+
+.sidebar .items-tab .nav-tabs .nav-link {
+  width: 100px;
+  height: 35px;
+  color: var(--secondary-text) !important;
+}
+
+.sidebar .items-tab .nav-tabs .nav-link.active {
+  background: var(--main-color) !important;
+  color: var(--main-text) !important;
+  box-shadow: none;
+}
+
+.sidebar .items-tab h1,
+.sidebar .bundles-tab h1 {
+  font-weight: 600;
+  font-size: 40px;
+}
+
+.items-tab .input-group {
+  display: flex;
+  align-items: center;
+}
+
+.items-tab .input-group .input-group-text {
+  background: none;
+  border: none;
+  padding: 0;
+  padding-right: 10px;
+}
+
+.items-tab .input-group .input-group-text input {
+  margin-top: 0;
+  width: 1.2em;
+  height: 1.2em;
+  background-color: var(--secondary-color);
+  border: none;
+  box-shadow: none;
+}
+
+.items-tab .input-group .input-group-text input:checked {
+  background-color: var(--alternative-color);
+}
+
+.items-tab .input-group > img {
+  margin-right: 10px;
+  width: 18px;
+}
+
+.items-tab .input-group h6 {
+  margin: 0;
+  cursor: default;
+}
+
+.items-tab .form-control {
+  width: 40%;
+}
+
+.ticket-item button {
+  width: 50px;
+  height: 50px;
+  background-color: #1a1840 !important;
+  color: #9796cf !important;
+  border: 1px solid #343261 !important;
+  box-shadow: none !important;
+}
+
+.ticket-active button {
+  background-color: #12ade2 !important;
+  color: white !important;
+}
+
+.sidebar .account .user-avatar {
+  width: 100px;
+}
+
+.sidebar .account .user-name {
+  color: #b1afcd;
+  font-size: 30px;
+  margin: 0;
+}
+
+.sidebar .account .user-email {
+  color: #9796cf;
+  font-size: 15px;
+}
+
+.sidebar .account .nft-qr-button {
+  border: 1px solid #312f62 !important;
+  background-color: #262250 !important;
+  color: #9796cf !important;
+  border-radius: 5px !important;
+  box-shadow: none !important;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar .account .nft-qr-button img {
+  width: 20px;
+  margin-left: 10px;
+}
+
+.sidebar .account .account-btn {
+  font-size: 20px;
+  color: #6f6c99;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+}
+
+.sidebar .account .account-btn a {
+  cursor: pointer;
+}
+
+.sidebar .account .account-btn span.active {
+  color: #53b9ea;
+}
