@@ -13,6 +13,7 @@ import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import ItemCard from "./components/ItemCard";
 import SaleInfoCard from "./components/SaleInfoCard";
+import NumberFormat from "react-number-format";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -22,18 +23,28 @@ import arrowLeft from "./assets/Images/icons/arrow-left.png";
 import {
   getMarketNFTs,
   executeOrder,
+  placeBid,
+  cancelBid,
   checkAllowance,
   increaseAllowance,
 } from "./blockchain/functions";
 
-function App({ userAddress, setUserAddress, connectWallet, userBalances }) {
+function App({
+  userAddress,
+  setUserAddress,
+  connectWallet,
+  userBalances,
+  items,
+  getItems,
+}) {
   const [activeItem, setActiveItem] = useState(0);
   const [isPreviewItem, setIsPreviewItem] = useState(false);
+  const [bid, setBid] = useState("");
   const [marketsAllowance, setMarketsAllowance] = useState({
     marketAllowance: false,
     bundlerAllowance: false,
   });
-  const [items, setItems] = useState([]);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const itemSaleHistory = [
@@ -70,21 +81,38 @@ function App({ userAddress, setUserAddress, connectWallet, userBalances }) {
 
     if (receipt) {
       console.log(receipt);
+      getItems();
+      setIsPreviewItem(false);
     }
 
     setIsLoading(false);
   };
 
-  const getItems = async () => {
-    let result = await getMarketNFTs();
-    if (result) {
-      setItems(result);
+  const handleBid = async (item) => {
+    setIsLoading(true);
+
+    let receipt = await placeBid(item.token_id, bid);
+
+    if (receipt) {
+      console.log(receipt);
+      getItems();
     }
+
+    setIsLoading(false);
   };
 
-  useEffect(() => {
-    getItems();
-  }, []);
+  const handleCancelBid = async (item) => {
+    setIsLoading(true);
+
+    let receipt = await cancelBid(item.token_id);
+
+    if (receipt) {
+      console.log(receipt);
+      getItems();
+    }
+
+    setIsLoading(false);
+  };
 
   const SectionHeader = (props) => {
     return (
@@ -165,7 +193,7 @@ function App({ userAddress, setUserAddress, connectWallet, userBalances }) {
                     }
                     className="nft-buy-button"
                   >
-                    {isLoading ? "Buying..." : "Buy now"}
+                    Buy now
                   </Button>
                 </div>
               </div>
@@ -174,14 +202,6 @@ function App({ userAddress, setUserAddress, connectWallet, userBalances }) {
               <div className="info p-4 d-flex flex-column">
                 <h3 className="mb-4">About</h3>
                 <div className="d-flex">
-                  <div className="info-item">
-                    <h4>Machine</h4>
-                    <h6>
-                      <Badge className="rarity-badge nft-blue-bg me-2">
-                        {/* {getMachineSize(Number(item.giftPrice))} */}
-                      </Badge>
-                    </h6>
-                  </div>
                   <div className="info-item">
                     <h4>Rarity</h4>
                     <h6>
@@ -220,24 +240,48 @@ function App({ userAddress, setUserAddress, connectWallet, userBalances }) {
             </Col>
             <Col xs={6}>
               <div className="info p-4">
-                <h3 className="mb-4">Sale History</h3>
-                <div className="d-flex">
-                  <h4 className="buyer-title ps-2">Buyer</h4>
-                  <h4 className="seller-title">Seller</h4>
+                <h3 className="mb-4">Bids</h3>
+                <div className="mb-4">
+                  <h5>Current Bid: {item.bids.price / 10 ** 18} AVAX</h5>
+                  <span>{item.bids.bidder}</span>
                 </div>
-                {itemSaleHistory.map((item, index) => {
-                  return (
-                    <SaleInfoCard
-                      key={index}
-                      buyerName={item.buyerName}
-                      buyerId={item.buyerId}
-                      sellerName={item.sellerName}
-                      sellerId={item.sellerId}
-                      price={item.price}
-                      date={item.date}
+
+                {userAddress.toLowerCase() ===
+                item.bids.bidder.toLowerCase() ? (
+                  <div>
+                    <button
+                      disabled={isLoading}
+                      onClick={
+                        userAddress
+                          ? () => handleCancelBid(item)
+                          : connectWallet()
+                      }
+                      className="nft-buy-button"
+                    >
+                      Cancel Bid
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <h5>Place a Bid:</h5>
+                    <NumberFormat
+                      className="bid-input"
+                      value={bid}
+                      allowLeadingZeros={false}
+                      allowNegative={false}
+                      onValueChange={({ value }) => setBid(value)}
                     />
-                  );
-                })}
+                    <button
+                      disabled={isLoading}
+                      onClick={
+                        userAddress ? () => handleBid(item) : connectWallet()
+                      }
+                      className="nft-buy-button"
+                    >
+                      Place Bid
+                    </button>
+                  </div>
+                )}
               </div>
             </Col>
           </Row>

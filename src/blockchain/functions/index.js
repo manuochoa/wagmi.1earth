@@ -59,6 +59,7 @@ export const getMarketNFTs = async () => {
     await marketNFTs.map(async (el) => {
       let metadata;
       let itemInfo = await marketContract.orderByTokenId(el);
+      let bids = await marketContract.bidByTokenId(el);
       let token_uri = await NFTcontract.tokenURI(el);
       let rewards = await NFTcontract.getRewards(el);
       let reflections = await NFTcontract.getReflections(el);
@@ -75,6 +76,7 @@ export const getMarketNFTs = async () => {
         token_id: el.toString(),
         metadata,
         itemInfo,
+        bids,
         pendingRewards: Number(rewards.amount / 10 ** 18).toFixed(4),
         pendingReflections: Number(reflections / 10 ** 18).toFixed(4),
       };

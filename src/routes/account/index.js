@@ -11,6 +11,7 @@ import imageGray from "../../assets/Images/icons/Image-gray.png";
 import arrowLeft from "../../assets/Images/icons/arrow-left.png";
 import itemImage from "../../assets/Images/item.png";
 import UserItemCard from "../../components/UserItemCard";
+import NumberFormat from "react-number-format";
 
 import {
   createOrder,
@@ -33,10 +34,13 @@ const Account = ({
   connectWallet,
   userBalances,
   loadUserBalances,
+  marketItems,
+  getItems,
 }) => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [minted, setMinted] = useState("");
   const [items, setItems] = useState([]);
+  const [userOrders, setUserOrders] = useState([]);
   const [activeItem, setActiveItem] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [price, setPrice] = useState("");
@@ -80,6 +84,8 @@ const Account = ({
     let result = await cancelOrder(_tokenId);
     if (result) {
       console.log(result);
+      setActiveTab("wallet");
+      getInventoryNFTs();
     }
 
     setIsLoading(false);
@@ -91,6 +97,8 @@ const Account = ({
     let result = await updateOrder(_tokenId, price);
     if (result) {
       console.log(result);
+      setActiveTab("wallet");
+      getItems();
     }
 
     setIsLoading(false);
@@ -103,7 +111,7 @@ const Account = ({
     if (result) {
       console.log(result);
     }
-
+    setActiveTab("wallet");
     loadUserBalances();
     setIsLoading(false);
   };
@@ -158,6 +166,18 @@ const Account = ({
     setIsLoading(false);
   };
 
+  const getUserOrders = async () => {
+    if (marketItems.length > 0 && userAddress) {
+      let orders = marketItems.filter(
+        (el) => el.itemInfo.seller.toLowerCase() === userAddress.toLowerCase()
+      );
+      if (orders) {
+        setUserOrders(orders);
+      }
+      console.log(orders, "orders");
+    }
+  };
+
   const checkAllowance = async (_tokenId) => {
     if (userAddress) {
       let result = await checkERC721Allowance(userAddress);
@@ -171,6 +191,10 @@ const Account = ({
     getInventoryNFTs();
     checkAllowance();
   }, [userAddress]);
+
+  useEffect(() => {
+    getUserOrders();
+  }, [marketItems]);
 
   const SectionHeader = (props) => {
     const { headerTitle } = props;
@@ -218,13 +242,13 @@ const Account = ({
           <Row className="mt-4">
             <Col xs={5}>
               <div className="item-image d-flex justify-content-center align-items-center mt-5 mb-5 pt-5 pb-5">
-                <img className="img-fluid" src={item.metadata.image} alt="" />
+                <img className="img-fluid" src={item.metadata?.image} alt="" />
               </div>
             </Col>
             <Col xs={7}>
               <div className="item-info mt-5 mb-5 pt-5 pb-5">
                 <h5 className="item-number">Token Id: {item.token_id}</h5>
-                <h3 className="item-name">{item.metadata.name}</h3>
+                <h3 className="item-name">{item.metadata?.name}</h3>
                 <div className="item-price d-flex align-items-center">
                   <h1 className="me-5">
                     <Form.Control
@@ -262,21 +286,22 @@ const Account = ({
                     <h6>
                       <Badge
                         className={
-                          item.metadata.attributes[0].value === "Common"
+                          item.metadata.attributes[0]?.value === "Common"
                             ? "rarity-badge"
-                            : item.metadata.attributes[0].value === "Endangered"
+                            : item.metadata.attributes[0]?.value ===
+                              "Endangered"
                             ? "rarity-badge nft-Endangered"
-                            : item.metadata.attributes[0].value === "Shiny"
+                            : item.metadata.attributes[0]?.value === "Shiny"
                             ? "rarity-badge nft-Shiny"
-                            : item.metadata.attributes[0].value === "Unique"
+                            : item.metadata.attributes[0]?.value === "Unique"
                             ? "rarity-badge nft-Unique"
-                            : item.metadata.attributes[0].value ===
+                            : item.metadata.attributes[0]?.value ===
                               "Shiny Endangered"
                             ? "rarity-badge nft-sEndangered"
                             : "rarity-badge"
                         }
                       >
-                        {item.metadata.attributes[0].value}
+                        {item.metadata.attributes[0]?.value}
                       </Badge>
                     </h6>
                   </div>
@@ -314,6 +339,132 @@ const Account = ({
                   <h4 className="buyer-title ps-2">Buyer</h4>
                   <h4 className="seller-title">Seller</h4>
                 </div>
+              </div>
+            </Col>
+          </Row>
+        </div>
+      </div>
+    );
+  };
+
+  const renderOrderPreview = () => {
+    const item = userOrders[activeItem];
+
+    return (
+      <div className="item-section">
+        <BackHeader
+          isPreview={true}
+          onClickBack={() => setActiveTab("wallet")}
+        />
+        <div className="item-preview mt-4">
+          <Row className="mt-4">
+            <Col xs={5}>
+              <div className="item-image d-flex justify-content-center align-items-center mt-5 mb-5 pt-5 pb-5">
+                <img className="img-fluid" src={item.metadata.image} alt="" />
+              </div>
+            </Col>
+            <Col xs={7}>
+              <div className="item-info mt-5 mb-5 pt-5 pb-5">
+                <h5 className="item-number">Token Id: {item.token_id}</h5>
+                <h3 className="item-name">{item.metadata.name}</h3>
+                <div className="item-price d-flex align-items-center">
+                  <h1 className="me-5">
+                    {item.itemInfo?.price / 10 ** 18} AVAX
+                  </h1>
+                  <Button
+                    disabled={isLoading}
+                    onClick={
+                      userAddress
+                        ? () => handleCancelOrder(item.token_id)
+                        : connectWallet()
+                    }
+                    className="nft-buy-button"
+                  >
+                    Cancel Order
+                  </Button>
+                </div>
+              </div>
+            </Col>
+            <Col xs={6}>
+              <div className="info p-4 d-flex flex-column">
+                <h3 className="mb-4">About</h3>
+                <div className="d-flex">
+                  <div className="info-item">
+                    <h4>Rarity</h4>
+                    <h6>
+                      <Badge
+                        className={
+                          item.metadata.attributes[0].value === "Common"
+                            ? "rarity-badge"
+                            : item.metadata.attributes[0].value === "Endangered"
+                            ? "rarity-badge nft-Endangered"
+                            : item.metadata.attributes[0].value === "Shiny"
+                            ? "rarity-badge nft-Shiny"
+                            : item.metadata.attributes[0].value === "Unique"
+                            ? "rarity-badge nft-Unique"
+                            : item.metadata.attributes[0].value ===
+                              "Shiny Endangered"
+                            ? "rarity-badge nft-sEndangered"
+                            : "rarity-badge"
+                        }
+                      >
+                        {item.metadata.attributes[0].value}
+                      </Badge>
+                    </h6>
+                  </div>
+                </div>
+                <div className="owner-detail mt-5 d-flex align-items-center ">
+                  <h4 className="mr-3">
+                    Pending Rewards: {item.pendingRewards} AVAX
+                  </h4>
+                </div>
+                <div className="owner-detail mt-5 d-flex align-items-center ">
+                  <h4 className="mr-3">
+                    Pending Reflections: {item.pendingReflections} $1EARTH
+                  </h4>
+                </div>
+              </div>
+            </Col>
+            <Col xs={6}>
+              <div className="info p-4">
+                <h3 className="mb-4">Bids</h3>
+                <div className="mb-2">
+                  <h5>Current Bid: {item.bids.price / 10 ** 18} AVAX</h5>
+                  <span>{item.bids.bidder}</span>
+                </div>
+
+                <div className="mb-4">
+                  <button
+                    disabled={isLoading}
+                    onClick={
+                      userAddress
+                        ? () => handleAcceptBid(item.token_id)
+                        : connectWallet()
+                    }
+                    className="nft-buy-button"
+                  >
+                    Accept Bid
+                  </button>
+                </div>
+                <h3>Update Price</h3>
+                <NumberFormat
+                  className="bid-input"
+                  value={price}
+                  allowLeadingZeros={false}
+                  allowNegative={false}
+                  onValueChange={({ value }) => setPrice(value)}
+                />
+                <button
+                  disabled={isLoading}
+                  onClick={
+                    userAddress
+                      ? () => handleUpdateOrder(item.token_id)
+                      : connectWallet()
+                  }
+                  className="nft-buy-button"
+                >
+                  Update Price
+                </button>
               </div>
             </Col>
           </Row>
@@ -366,6 +517,38 @@ const Account = ({
     return (
       <div className="activity-section">
         <SectionHeader headerTitle="Active Orders" />
+        <Row>
+          <div className="bundle-items">
+            {userOrders.length == 0 ? (
+              <div className="no-items w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+                <h3 className="mb-4">No items found</h3>
+              </div>
+            ) : (
+              <div className="inventory-items">
+                <Row>
+                  <Col xs={12}>
+                    <div className="d-flex mt-3">
+                      <h1>{userOrders.length} Items</h1>
+                    </div>
+                  </Col>
+                  {userOrders.map((item, index) => {
+                    return (
+                      <Col xs={2} key={index} className="mt-4">
+                        <UserItemCard
+                          onClick={() => {
+                            setActiveItem(index);
+                            setActiveTab("order");
+                          }}
+                          item={item}
+                        />
+                      </Col>
+                    );
+                  })}
+                </Row>
+              </div>
+            )}
+          </div>
+        </Row>
       </div>
     );
   };
@@ -423,6 +606,8 @@ const Account = ({
                 ? renderItemPreview()
                 : activeTab === "dashboard"
                 ? renderDashboard()
+                : activeTab === "order"
+                ? renderOrderPreview()
                 : null}
             </Col>
           </Row>

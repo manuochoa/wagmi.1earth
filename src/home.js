@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import Account from "./routes/account";
-import { getUserBalances } from "./blockchain/functions";
+import { getUserBalances, getMarketNFTs } from "./blockchain/functions";
 
 function Home() {
   const [userAddress, setUserAddress] = useState("");
   const [userBalances, setUserBalances] = useState([]);
+  const [items, setItems] = useState([]);
 
   const connectWallet = async () => {
     console.log("hola");
@@ -57,8 +58,16 @@ function Home() {
     }
   };
 
+  const getItems = async () => {
+    let result = await getMarketNFTs();
+    if (result) {
+      setItems(result);
+    }
+  };
+
   useEffect(() => {
     checkConnection();
+    getItems();
   }, []);
 
   useEffect(() => {
@@ -76,6 +85,8 @@ function Home() {
               setUserAddress={setUserAddress}
               connectWallet={connectWallet}
               userBalances={userBalances}
+              items={items}
+              getItems={getItems}
             />
           }
         />
@@ -88,6 +99,8 @@ function Home() {
               connectWallet={connectWallet}
               userBalances={userBalances}
               loadUserBalances={loadUserBalances}
+              marketItems={items}
+              getItems={getItems}
             />
           }
         />
