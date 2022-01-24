@@ -557,25 +557,30 @@ const Account = ({
     return (
       <div className="activity-section">
         <SectionHeader headerTitle="Dashboard" />
-        <div className="mt-3">
-          <h4>Total NFTs minted: {minted}/2763</h4>
-          <h4>Mint a new NFT</h4>
-          <button disabled={isLoading} onClick={handleMint}>
-            Mint
-          </button>
-        </div>
-        <div className="mt-3">
-          <h4>Balances:</h4>
-          <h5>{userBalances[0]?.value} $1EARTH</h5>
-          <h5>{userBalances[1]?.value} AVAX</h5>
-        </div>
-        <div className="mt-3">
-          <h4>Your Holder Rewards: {userBalances[2]?.value} AVAX</h4>
-          <h5> Claim your rewards</h5>
-          <button disabled={isLoading} onClick={handleClaim}>
-            Claim
-          </button>
-        </div>
+        <Row>
+          <Col xs={1} className="mt-4"></Col>
+          <Col xs={4} className="mt-4 dashboard-block">
+            <div className="mt-3">
+              <h4>Total NFTs minted: {minted}/2763</h4>
+              <h4>Mint a new NFT</h4>
+              <button disabled={isLoading} onClick={handleMint}>
+                Mint
+              </button>
+            </div>
+          </Col>
+          <Col xs={2} className="mt-4"></Col>
+
+          <Col xs={4} className="mt-4 dashboard-block">
+            <div className="mt-3">
+              <h4>Your Holder Rewards: {userBalances[2]?.value} AVAX</h4>
+              <h5> Claim your rewards</h5>
+              <button disabled={isLoading} onClick={handleClaim}>
+                Claim
+              </button>
+            </div>
+          </Col>
+          <Col xs={1} className="mt-4"></Col>
+        </Row>
       </div>
     );
   };
