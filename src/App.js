@@ -202,36 +202,37 @@ function App({
               <div className="info p-4 d-flex flex-column">
                 <h3 className="mb-4">About</h3>
                 <div className="d-flex">
-                  <div className="info-item">
-                    <h4>Rarity</h4>
-                    <h6>
-                      <Badge
-                        className={
-                          item.metadata.attributes[0].value === "Common"
-                            ? "rarity-badge"
-                            : item.metadata.attributes[0].value === "Endangered"
-                            ? "rarity-badge nft-Endangered"
-                            : item.metadata.attributes[0].value === "Shiny"
-                            ? "rarity-badge nft-Shiny"
-                            : item.metadata.attributes[0].value === "Unique"
-                            ? "rarity-badge nft-Unique"
-                            : item.metadata.attributes[0].value ===
-                              "Shiny Endangered"
-                            ? "rarity-badge nft-sEndangered"
-                            : "rarity-badge"
-                        }
-                      >
-                        {item.metadata.attributes[0].value}
-                      </Badge>
-                    </h6>
+                  {/* <div className="info-item"> */}
+                  <h4>Rarity:</h4>
+                  <div className="badge-container">
+                    <Badge
+                      className={
+                        item.metadata.attributes[0]?.value === "Common"
+                          ? "rarity-badge"
+                          : item.metadata.attributes[0]?.value === "Endangered"
+                          ? "rarity-badge nft-Endangered"
+                          : item.metadata.attributes[0]?.value === "Shiny"
+                          ? "rarity-badge nft-Shiny"
+                          : item.metadata.attributes[0]?.value === "Unique"
+                          ? "rarity-badge nft-Unique"
+                          : item.metadata.attributes[0]?.value ===
+                            "Shiny Endangered"
+                          ? "rarity-badge nft-sEndangered"
+                          : "rarity-badge"
+                      }
+                    >
+                      {item.metadata.attributes[0]?.value}
+                    </Badge>
                   </div>
+
+                  {/* </div> */}
                 </div>
-                <div className="owner-detail mt-5 d-flex align-items-center ">
+                <div className="owner-detail mt-4 d-flex align-items-center ">
                   <h4 className="mr-3">
                     Pending Rewards: {item.pendingRewards} AVAX
                   </h4>
                 </div>
-                <div className="owner-detail mt-5 d-flex align-items-center ">
+                <div className="owner-detail mt-4 d-flex align-items-center ">
                   <h4 className="mr-3">
                     Pending Reflections: {item.pendingReflections} $1EARTH
                   </h4>

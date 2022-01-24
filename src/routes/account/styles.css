@@ -160,8 +160,11 @@
     var(--secondary-color) -14.32%,
     var(--main-color) 92.98%
   ) !important;
-
   border-radius: 24px !important;
   border: none !important;
   padding: 10px 20px;
+}
+
+.badge-container {
+  margin-left: 10px;
 }

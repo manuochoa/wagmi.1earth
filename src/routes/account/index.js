@@ -269,70 +269,62 @@ const Account = ({
                 </div>
               </div>
             </Col>
-            <Col xs={6}>
+            <Col xs={12}>
               <div className="info p-4 d-flex flex-column">
                 <h3 className="mb-4">About</h3>
                 <div className="d-flex">
-                  <div className="info-item">
-                    <h4>Machine</h4>
-                    <h6>
-                      <Badge className="rarity-badge nft-blue-bg me-2">
-                        {/* {getMachineSize(Number(item.giftPrice))} */}
-                      </Badge>
-                    </h6>
+                  {/* <div className="info-item"> */}
+                  <h4>Rarity:</h4>
+                  <div className="badge-container">
+                    <Badge
+                      className={
+                        item.metadata.attributes[0]?.value === "Common"
+                          ? "rarity-badge"
+                          : item.metadata.attributes[0]?.value === "Endangered"
+                          ? "rarity-badge nft-Endangered"
+                          : item.metadata.attributes[0]?.value === "Shiny"
+                          ? "rarity-badge nft-Shiny"
+                          : item.metadata.attributes[0]?.value === "Unique"
+                          ? "rarity-badge nft-Unique"
+                          : item.metadata.attributes[0]?.value ===
+                            "Shiny Endangered"
+                          ? "rarity-badge nft-sEndangered"
+                          : "rarity-badge"
+                      }
+                    >
+                      {item.metadata.attributes[0]?.value}
+                    </Badge>
                   </div>
-                  <div className="info-item">
-                    <h4>Rarity</h4>
-                    <h6>
-                      <Badge
-                        className={
-                          item.metadata.attributes[0]?.value === "Common"
-                            ? "rarity-badge"
-                            : item.metadata.attributes[0]?.value ===
-                              "Endangered"
-                            ? "rarity-badge nft-Endangered"
-                            : item.metadata.attributes[0]?.value === "Shiny"
-                            ? "rarity-badge nft-Shiny"
-                            : item.metadata.attributes[0]?.value === "Unique"
-                            ? "rarity-badge nft-Unique"
-                            : item.metadata.attributes[0]?.value ===
-                              "Shiny Endangered"
-                            ? "rarity-badge nft-sEndangered"
-                            : "rarity-badge"
-                        }
-                      >
-                        {item.metadata.attributes[0]?.value}
-                      </Badge>
-                    </h6>
-                  </div>
+
+                  {/* </div> */}
                 </div>
-                <div className="owner-detail mt-5 d-flex align-items-center ">
+                <div className="owner-detail mt-2 d-flex align-items-center ">
                   <h4 className="mr-3">
                     Pending Rewards: {item.pendingRewards} AVAX
                   </h4>
                   <button
                     disabled={isLoading}
                     onClick={() => handleClaimRewards(item.token_id)}
-                    className="nft-buy-button m-3"
+                    className="nft-buy-button m-1"
                   >
                     Claim
                   </button>
                 </div>
-                <div className="owner-detail mt-5 d-flex align-items-center ">
+                <div className="owner-detail mt-2 d-flex align-items-center ">
                   <h4 className="mr-3">
                     Pending Reflections: {item.pendingReflections} $1EARTH
                   </h4>
                   <button
                     disabled={isLoading}
                     onClick={() => handleClaimReflections(item.token_id)}
-                    className="nft-buy-button m-3"
+                    className="nft-buy-button m-1"
                   >
                     Claim
                   </button>
                 </div>
               </div>
             </Col>
-            <Col xs={6}>
+            {/* <Col xs={6}>
               <div className="info p-4">
                 <h3 className="mb-4">Sale History</h3>
                 <div className="d-flex">
@@ -340,7 +332,7 @@ const Account = ({
                   <h4 className="seller-title">Seller</h4>
                 </div>
               </div>
-            </Col>
+            </Col> */}
           </Row>
         </div>
       </div>
@@ -389,36 +381,37 @@ const Account = ({
               <div className="info p-4 d-flex flex-column">
                 <h3 className="mb-4">About</h3>
                 <div className="d-flex">
-                  <div className="info-item">
-                    <h4>Rarity</h4>
-                    <h6>
-                      <Badge
-                        className={
-                          item.metadata.attributes[0].value === "Common"
-                            ? "rarity-badge"
-                            : item.metadata.attributes[0].value === "Endangered"
-                            ? "rarity-badge nft-Endangered"
-                            : item.metadata.attributes[0].value === "Shiny"
-                            ? "rarity-badge nft-Shiny"
-                            : item.metadata.attributes[0].value === "Unique"
-                            ? "rarity-badge nft-Unique"
-                            : item.metadata.attributes[0].value ===
-                              "Shiny Endangered"
-                            ? "rarity-badge nft-sEndangered"
-                            : "rarity-badge"
-                        }
-                      >
-                        {item.metadata.attributes[0].value}
-                      </Badge>
-                    </h6>
+                  {/* <div className="info-item"> */}
+                  <h4>Rarity:</h4>
+                  <div className="badge-container">
+                    <Badge
+                      className={
+                        item.metadata.attributes[0]?.value === "Common"
+                          ? "rarity-badge"
+                          : item.metadata.attributes[0]?.value === "Endangered"
+                          ? "rarity-badge nft-Endangered"
+                          : item.metadata.attributes[0]?.value === "Shiny"
+                          ? "rarity-badge nft-Shiny"
+                          : item.metadata.attributes[0]?.value === "Unique"
+                          ? "rarity-badge nft-Unique"
+                          : item.metadata.attributes[0]?.value ===
+                            "Shiny Endangered"
+                          ? "rarity-badge nft-sEndangered"
+                          : "rarity-badge"
+                      }
+                    >
+                      {item.metadata.attributes[0]?.value}
+                    </Badge>
                   </div>
+
+                  {/* </div> */}
                 </div>
-                <div className="owner-detail mt-5 d-flex align-items-center ">
+                <div className="owner-detail mt-4 d-flex align-items-center ">
                   <h4 className="mr-3">
                     Pending Rewards: {item.pendingRewards} AVAX
                   </h4>
                 </div>
-                <div className="owner-detail mt-5 d-flex align-items-center ">
+                <div className="owner-detail mt-4 d-flex align-items-center ">
                   <h4 className="mr-3">
                     Pending Reflections: {item.pendingReflections} $1EARTH
                   </h4>
@@ -427,13 +420,13 @@ const Account = ({
             </Col>
             <Col xs={6}>
               <div className="info p-4">
-                <h3 className="mb-4">Bids</h3>
+                <h4 className="mb-2">Bids</h4>
                 <div className="mb-2">
                   <h5>Current Bid: {item.bids.price / 10 ** 18} AVAX</h5>
                   <span>{item.bids.bidder}</span>
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-2">
                   <button
                     disabled={isLoading}
                     onClick={
@@ -446,7 +439,7 @@ const Account = ({
                     Accept Bid
                   </button>
                 </div>
-                <h3>Update Price</h3>
+                <h4>Update Price</h4>
                 <NumberFormat
                   className="bid-input"
                   value={price}
