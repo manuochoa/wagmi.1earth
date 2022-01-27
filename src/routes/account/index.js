@@ -137,6 +137,7 @@ const Account = ({
       console.log(result);
     }
 
+    getInventoryNFTs();
     loadUserBalances();
     setIsLoading(false);
   };
@@ -149,6 +150,7 @@ const Account = ({
       console.log(result);
     }
 
+    getInventoryNFTs();
     loadUserBalances();
     setIsLoading(false);
   };
@@ -161,6 +163,7 @@ const Account = ({
       console.log(result);
     }
 
+    getInventoryNFTs();
     loadUserBalances();
     setIsLoading(false);
   };

@@ -33,9 +33,11 @@ const Header = ({
       <Row className="w-50">
         {userBalances.map((item, index) => {
           return (
-            <Col key={index} className="nft-img-dropdown">
-              {item.value} <span className="ms-1">{item.coin}</span>
-            </Col>
+            item.coin !== "Market Reflections" && (
+              <Col key={index} className="nft-img-dropdown">
+                {item.value} <span className="ms-1">{item.coin}</span>
+              </Col>
+            )
           );
         })}
       </Row>
