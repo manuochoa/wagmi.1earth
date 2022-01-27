@@ -256,7 +256,7 @@ function App({
                   <span>
                     {item.bids.bidder !==
                       "0x0000000000000000000000000000000000000000" &&
-                      items.bids.bidder}
+                      item.bids.bidder}
                   </span>
                 </div>
 

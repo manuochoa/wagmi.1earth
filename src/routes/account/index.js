@@ -281,7 +281,7 @@ const Account = ({
                       type="number"
                       value={price}
                       onChange={(e) => setPrice(e.target.value)}
-                      placeholder="$0"
+                      placeholder="0 AVAX"
                     />
                   </h1>
                   <Button
