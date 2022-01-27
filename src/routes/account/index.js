@@ -12,6 +12,8 @@ import arrowLeft from "../../assets/Images/icons/arrow-left.png";
 import itemImage from "../../assets/Images/item.png";
 import UserItemCard from "../../components/UserItemCard";
 import NumberFormat from "react-number-format";
+import avaxLogo from "../../assets/Images/avax-logo.png";
+import earthLogo from "../../assets/Images/earth-logo.png";
 
 import {
   createOrder,
@@ -41,10 +43,16 @@ const Account = ({
   const [minted, setMinted] = useState("");
   const [items, setItems] = useState([]);
   const [userOrders, setUserOrders] = useState([]);
+  const [userRewards, setUserRewards] = useState({
+    userAvaxRewards: "",
+    userEarthReflections: "",
+  });
+  const [userTokensIds, setUserTokensIds] = useState([]);
   const [activeItem, setActiveItem] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [price, setPrice] = useState("");
   const [marketAllowance, setMarketAllowance] = useState(false);
+  const [amountToMint, setAmountToMint] = useState("");
 
   const getInventoryNFTs = async () => {
     let totalSupply = await getMintedNFTs();
@@ -56,7 +64,12 @@ const Account = ({
       console.log(receipt, "inventory");
 
       if (receipt) {
-        setItems(receipt);
+        setItems(receipt.tokens);
+        setUserRewards({
+          userAvaxRewards: receipt.userAvaxRewards,
+          userEarthReflections: receipt.userEarthReflections,
+        });
+        setUserTokensIds(receipt.ids);
       }
     }
   };
@@ -128,10 +141,10 @@ const Account = ({
     setIsLoading(false);
   };
 
-  const handleClaimRewards = async (_tokenId) => {
+  const handleClaimRewards = async () => {
     setIsLoading(true);
 
-    let result = await claimRewards(_tokenId);
+    let result = await claimRewards(userTokensIds);
     if (result) {
       console.log(result);
     }
@@ -140,10 +153,10 @@ const Account = ({
     setIsLoading(false);
   };
 
-  const handleClaimReflections = async (_tokenId) => {
+  const handleClaimReflections = async () => {
     setIsLoading(true);
 
-    let result = await claimReflections(_tokenId);
+    let result = await claimReflections(userTokensIds);
     if (result) {
       console.log(result);
     }
@@ -155,7 +168,7 @@ const Account = ({
   const handleMint = async () => {
     setIsLoading(true);
 
-    let result = await mintNFT();
+    let result = await mintNFT(amountToMint);
     if (result) {
       console.log(result);
     }
@@ -184,6 +197,16 @@ const Account = ({
       if (result) {
         setMarketAllowance(result);
       }
+    }
+  };
+
+  const handleAmountToMint = (value) => {
+    if (value < 1) {
+      setAmountToMint(1);
+    } else if (value > 20) {
+      setAmountToMint(20);
+    } else {
+      setAmountToMint(value);
     }
   };
 
@@ -241,13 +264,13 @@ const Account = ({
         <div className="item-preview mt-4">
           <Row className="mt-4">
             <Col xs={5}>
-              <div className="item-image d-flex justify-content-center align-items-center mt-5 mb-5 pt-5 pb-5">
+              <div className="item-image d-flex justify-content-center align-items-center  mb-5 ">
                 <img className="img-fluid" src={item.metadata?.image} alt="" />
               </div>
             </Col>
             <Col xs={7}>
               <div className="item-info mt-5 mb-5 pt-5 pb-5">
-                <h5 className="item-number">Token Id: {item.token_id}</h5>
+                <h5 className="item-number">Mint #{item.token_id}</h5>
                 <h3 className="item-name">{item.metadata?.name}</h3>
                 <div className="item-price d-flex align-items-center">
                   <h1 className="me-5">
@@ -302,25 +325,25 @@ const Account = ({
                   <h4 className="mr-3">
                     Pending Rewards: {item.pendingRewards} AVAX
                   </h4>
-                  <button
+                  {/* <button
                     disabled={isLoading}
                     onClick={() => handleClaimRewards(item.token_id)}
                     className="nft-buy-button m-1"
                   >
                     Claim
-                  </button>
+                  </button> */}
                 </div>
                 <div className="owner-detail mt-2 d-flex align-items-center ">
                   <h4 className="mr-3">
                     Pending Reflections: {item.pendingReflections} $1EARTH
                   </h4>
-                  <button
+                  {/* <button
                     disabled={isLoading}
                     onClick={() => handleClaimReflections(item.token_id)}
                     className="nft-buy-button m-1"
                   >
                     Claim
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </Col>
@@ -351,35 +374,44 @@ const Account = ({
         <div className="item-preview mt-4">
           <Row className="mt-4">
             <Col xs={5}>
-              <div className="item-image d-flex justify-content-center align-items-center mt-5 mb-5 pt-5 pb-5">
+              <div className="item-image d-flex justify-content-center align-items-center pb-5">
                 <img className="img-fluid" src={item.metadata.image} alt="" />
               </div>
             </Col>
             <Col xs={7}>
               <div className="item-info mt-5 mb-5 pt-5 pb-5">
-                <h5 className="item-number">Token Id: {item.token_id}</h5>
+                <h5 className="item-number">Mint #{item.token_id}</h5>
                 <h3 className="item-name">{item.metadata.name}</h3>
                 <div className="item-price d-flex align-items-center">
-                  <h1 className="me-5">
-                    {item.itemInfo?.price / 10 ** 18} AVAX
-                  </h1>
-                  <Button
-                    disabled={isLoading}
-                    onClick={
-                      userAddress
-                        ? () => handleCancelOrder(item.token_id)
-                        : connectWallet()
-                    }
-                    className="nft-buy-button"
-                  >
-                    Cancel Order
-                  </Button>
+                  <div className="item-price d-flex align-items-center">
+                    <div className="price-container">
+                      <h1 className="me-3">
+                        {item.itemInfo?.price / 10 ** 18}
+                      </h1>
+                      <img
+                        className="price-logo-main"
+                        src={avaxLogo}
+                        alt="avax-logo"
+                      />
+                    </div>
+                  </div>
                 </div>
+                <Button
+                  disabled={isLoading}
+                  onClick={
+                    userAddress
+                      ? () => handleCancelOrder(item.token_id)
+                      : connectWallet()
+                  }
+                  className="nft-buy-button mt-4"
+                >
+                  Cancel Order
+                </Button>
               </div>
             </Col>
             <Col xs={6}>
               <div className="info p-4 d-flex flex-column">
-                <h3 className="mb-4">About</h3>
+                <h3 className="mb-3">About</h3>
                 <div className="d-flex">
                   {/* <div className="info-item"> */}
                   <h4>Rarity:</h4>
@@ -406,12 +438,12 @@ const Account = ({
 
                   {/* </div> */}
                 </div>
-                <div className="owner-detail mt-4 d-flex align-items-center ">
+                <div className="owner-detail mt-2 d-flex align-items-center ">
                   <h4 className="mr-3">
                     Pending Rewards: {item.pendingRewards} AVAX
                   </h4>
                 </div>
-                <div className="owner-detail mt-4 d-flex align-items-center ">
+                <div className="owner-detail mt-2 d-flex align-items-center ">
                   <h4 className="mr-3">
                     Pending Reflections: {item.pendingReflections} $1EARTH
                   </h4>
@@ -420,44 +452,52 @@ const Account = ({
             </Col>
             <Col xs={6}>
               <div className="info p-4">
-                <h4 className="mb-2">Bids</h4>
-                <div className="mb-2">
-                  <h5>Current Bid: {item.bids.price / 10 ** 18} AVAX</h5>
-                  <span>{item.bids.bidder}</span>
+                <h4 className="mb-3">Bids</h4>
+                <div className="d-flex align-items-end mb-2">
+                  <div>
+                    <h5>Current Bid: {item.bids.price / 10 ** 18} AVAX</h5>
+                    <span>{item.bids.bidder}</span>
+                  </div>
+                  <div className="mx-3">
+                    <button
+                      disabled={isLoading}
+                      onClick={
+                        userAddress
+                          ? () => handleAcceptBid(item.token_id)
+                          : connectWallet()
+                      }
+                      className="nft-buy-button"
+                    >
+                      Accept Bid
+                    </button>
+                  </div>
                 </div>
 
-                <div className="mb-2">
-                  <button
-                    disabled={isLoading}
-                    onClick={
-                      userAddress
-                        ? () => handleAcceptBid(item.token_id)
-                        : connectWallet()
-                    }
-                    className="nft-buy-button"
-                  >
-                    Accept Bid
-                  </button>
+                <div className="d-flex align-items-baseline mb-2">
+                  <div className="d-flex align-items-baseline">
+                    <h4 className="m-0">Update Price:</h4>
+                    <NumberFormat
+                      className="bid-input"
+                      value={price}
+                      allowLeadingZeros={false}
+                      allowNegative={false}
+                      onValueChange={({ value }) => setPrice(value)}
+                    />
+                  </div>
+                  <div>
+                    <button
+                      disabled={isLoading}
+                      onClick={
+                        userAddress
+                          ? () => handleUpdateOrder(item.token_id)
+                          : connectWallet()
+                      }
+                      className="nft-buy-button"
+                    >
+                      Update Price
+                    </button>
+                  </div>
                 </div>
-                <h4>Update Price</h4>
-                <NumberFormat
-                  className="bid-input"
-                  value={price}
-                  allowLeadingZeros={false}
-                  allowNegative={false}
-                  onValueChange={({ value }) => setPrice(value)}
-                />
-                <button
-                  disabled={isLoading}
-                  onClick={
-                    userAddress
-                      ? () => handleUpdateOrder(item.token_id)
-                      : connectWallet()
-                  }
-                  className="nft-buy-button"
-                >
-                  Update Price
-                </button>
               </div>
             </Col>
           </Row>
@@ -469,7 +509,7 @@ const Account = ({
   const renderUserWallet = () => {
     return (
       <div className="inventory-section mt-5 mb-5">
-        <SectionHeader headerTitle="Wallet" />
+        <SectionHeader headerTitle="My Collections" />
         <Row>
           <div className="bundle-items">
             {items.length == 0 ? (
@@ -549,23 +589,66 @@ const Account = ({
   const renderDashboard = () => {
     return (
       <div className="activity-section">
-        <SectionHeader headerTitle="Dashboard" />
-        <Row>
-          <Col xs={1} className="mt-4"></Col>
+        <SectionHeader headerTitle="Home" />
+        <Row className="mb-4">
+          <Col xs={4} className="mt-4"></Col>
           <Col xs={4} className="mt-4 dashboard-block">
             <div className="mt-3">
               <h4>Total NFTs minted: {minted}/2763</h4>
               <h4>Mint a new NFT</h4>
+              <div className="d-flex flex-row align-items-center justify-content-center">
+                <button
+                  className="mint-icon"
+                  onClick={() => handleAmountToMint(Number(amountToMint) - 1)}
+                >
+                  -
+                </button>
+                <NumberFormat
+                  className="mint-input"
+                  value={amountToMint}
+                  allowLeadingZeros={false}
+                  allowNegative={false}
+                  onValueChange={({ value }) => handleAmountToMint(value)}
+                />
+                <button
+                  className="mint-icon"
+                  onClick={() => handleAmountToMint(Number(amountToMint) + 1)}
+                >
+                  +
+                </button>
+              </div>
               <button disabled={isLoading} onClick={handleMint}>
                 Mint
               </button>
             </div>
           </Col>
-          <Col xs={2} className="mt-4"></Col>
-
-          <Col xs={4} className="mt-4 dashboard-block">
+          <Col xs={4} className="mt-4"></Col>
+        </Row>
+        <Row>
+          <Col xs={3} className="mt-4 pb-3 dashboard-block">
             <div className="mt-3">
-              <h4>Your Holder Rewards: {userBalances[2]?.value} AVAX</h4>
+              <h4>Minting Reflections</h4>
+              <h5>(For NFT holders)</h5>
+              <h4 className="d-flex justify-content-center align-items-center">
+                {userRewards.userAvaxRewards}{" "}
+                <img className="price-logo" src={avaxLogo} alt="avax-logo" />
+              </h4>
+              <h5> Claim your rewards</h5>
+              <button disabled={isLoading} onClick={handleClaimRewards}>
+                Claim
+              </button>
+            </div>
+          </Col>
+          <Col xs={1} className="mt-4"></Col>
+
+          <Col xs={4} className="mt-4 pb-3 dashboard-block">
+            <div className="mt-3">
+              <h4>Secondary Market Reflections:</h4>
+              <h5>(For 1EARTH holders)</h5>
+              <h4 className="d-flex justify-content-center align-items-center">
+                {userBalances[2]?.value}{" "}
+                <img className="price-logo" src={avaxLogo} alt="avax-logo" />
+              </h4>
               <h5> Claim your rewards</h5>
               <button disabled={isLoading} onClick={handleClaim}>
                 Claim
@@ -573,6 +656,20 @@ const Account = ({
             </div>
           </Col>
           <Col xs={1} className="mt-4"></Col>
+          <Col xs={3} className="mt-4 pb-3 dashboard-block">
+            <div className="mt-3">
+              <h4>1EARTH Reflections</h4>
+              <h5>(For NFT holders)</h5>
+              <h4 className="d-flex justify-content-center align-items-center">
+                {userRewards.userEarthReflections}{" "}
+                <img className="price-logo" src={earthLogo} alt="earth-logo" />
+              </h4>
+              <h5> Claim your rewards</h5>
+              <button disabled={isLoading} onClick={handleClaimReflections}>
+                Claim
+              </button>
+            </div>
+          </Col>
         </Row>
       </div>
     );

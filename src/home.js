@@ -78,7 +78,7 @@ function Home() {
     <BrowserRouter>
       <Routes>
         <Route
-          path="/"
+          path="/marketplace"
           element={
             <App
               userAddress={userAddress}
@@ -91,7 +91,7 @@ function Home() {
           }
         />
         <Route
-          path="/account"
+          path="/"
           element={
             <Account
               userAddress={userAddress}

@@ -73,6 +73,10 @@ const Sidebar = (props) => {
     }
   };
 
+  const onClickMarketplace = () => {
+    navigate("/marketplace");
+  };
+
   const giftTab = () => {
     return (
       <Row>
@@ -101,7 +105,7 @@ const Sidebar = (props) => {
           <h6 className="text-uppercase mt-2 text-nft-light">Rarity</h6>
         </Col>
         <Col xs={6}>
-          <InputGroup className="mb-4 mt-2">
+          <InputGroup className="mb-2 mt-2">
             <InputGroup.Checkbox aria-label="Common" />
             <h6>
               <Badge className="rarity-badge">Common</Badge>
@@ -109,7 +113,7 @@ const Sidebar = (props) => {
           </InputGroup>
         </Col>
         <Col xs={6}>
-          <InputGroup className="mb-4 mt-2">
+          <InputGroup className="mb-2 mt-2">
             <InputGroup.Checkbox aria-label="Endangered" />
             <h6>
               <Badge className="rarity-badge nft-Endangered">Endangered</Badge>
@@ -117,7 +121,7 @@ const Sidebar = (props) => {
           </InputGroup>
         </Col>
         <Col xs={6}>
-          <InputGroup className="mb-4 mt-2">
+          <InputGroup className="mb-2 mt-2">
             <InputGroup.Checkbox aria-label="Shiny" />
             <h6>
               <Badge className="rarity-badge nft-Shiny">Shiny</Badge>
@@ -125,7 +129,7 @@ const Sidebar = (props) => {
           </InputGroup>
         </Col>
         <Col xs={6}>
-          <InputGroup className="mb-4 mt-2">
+          <InputGroup className="mb-2 mt-2">
             <InputGroup.Checkbox aria-label="Unique" />
             <h6>
               <Badge className="rarity-badge nft-Unique">Unique</Badge>
@@ -133,7 +137,7 @@ const Sidebar = (props) => {
           </InputGroup>
         </Col>
         <Col xs={8}>
-          <InputGroup className="mb-4 mt-2">
+          <InputGroup className="mb-2 mt-2">
             <InputGroup.Checkbox aria-label="Shiny Endangered" />
             <h6>
               <Badge className="rarity-badge nft-sEndangered">
@@ -179,7 +183,7 @@ const Sidebar = (props) => {
                     activeAccountTab === "dashboard" ? "active" : ""
                   }`}
                 >
-                  Dashboard
+                  Home
                 </span>
               </a>
             </Nav.Item>
@@ -204,7 +208,7 @@ const Sidebar = (props) => {
                     activeAccountTab === "wallet" ? "active" : ""
                   }`}
                 >
-                  Wallet
+                  My Collections
                 </span>
               </a>
             </Nav.Item>
@@ -235,26 +239,19 @@ const Sidebar = (props) => {
                 </span>
               </a>
             </Nav.Item>
+            <Nav.Item className="mt-5 account-btn market-tab">
+              <Button
+                // disabled={isLoading}
+                onClick={onClickMarketplace}
+                className="marketplace-button"
+              >
+                Marketplace
+              </Button>
+            </Nav.Item>
           </div>
         ) : (
           <Nav.Item className="mt-5 d-flex flex-column">
-            <Tabs
-              id="controlled-tab-example"
-              activeKey={activeTab}
-              className="mb-3 align-self-center"
-            >
-              <Tab
-                eventKey="items"
-                className="p-4"
-                title={
-                  <>
-                    <span className="ms-2">Marketplace</span>
-                  </>
-                }
-              >
-                <div className="items-tab">{giftTab()}</div>
-              </Tab>
-            </Tabs>
+            <div className="items-tab">{giftTab()}</div>
           </Nav.Item>
         )}
       </Nav>

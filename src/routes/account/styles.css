@@ -147,10 +147,15 @@
   display: grid;
   place-content: center;
   text-align: center;
-  background: var(--alternative-background) !important;
+  background: var(--main-background) !important;
   border-radius: 10px !important;
   min-height: 200px;
   cursor: pointer;
+}
+
+.dashboard-block .price-logo {
+  height: 25px;
+  width: 25px;
 }
 
 .dashboard-block button {
@@ -159,12 +164,21 @@
     127.09deg,
     var(--secondary-color) -14.32%,
     var(--main-color) 92.98%
-  ) !important;
-  border-radius: 24px !important;
-  border: none !important;
+  );
+  border-radius: 24px;
+  border: none;
   padding: 10px 20px;
 }
 
 .badge-container {
   margin-left: 10px;
+}
+
+.mint-icon {
+  margin-top: 0px !important;
+  background: none !important;
+  background: var(--alternative-background) !important;
+  border-radius: 10px !important;
+  border: none !important;
+  padding: 3px 13px !important;
 }

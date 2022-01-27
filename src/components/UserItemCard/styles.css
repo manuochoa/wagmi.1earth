@@ -1,5 +1,5 @@
 .item-card {
-  background: var(--alternative-background-active) !important;
+  background: var(--main-background) !important;
   box-shadow: 0px 21px 69px var(--alternative-background) !important;
   border-radius: 10px !important;
   position: relative;

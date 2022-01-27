@@ -6,9 +6,9 @@ let provider = new ethers.providers.JsonRpcProvider(
   "https://api.avax-test.network/ext/bc/C/rpc"
 );
 
-let marketAddress = "0x847Bfefc478912aBf3AB060ec8556F7ddccBd45A";
+let marketAddress = "0x1d1A1959eCa03493f2d9ccE099185e32aF90DF82";
 let tokenAddress = "0xAD334fB7743741d98baBb81a07800250Cf1EDE1D";
-let NFTAddress = "0x4e32090656F6deB1CB59C521307F04A40A96c9a3";
+let NFTAddress = "0x08A63D7A83418eDF37e8639EEE8a2A5C695f777c";
 
 let marketContract = new ethers.Contract(marketAddress, marketAbi, provider);
 let NFTcontract = new ethers.Contract(NFTAddress, NFTabi, provider);
@@ -28,7 +28,7 @@ export const getUserBalances = async (userAddress) => {
     { value: Number(avaxValance / 10 ** 18).toFixed(4), coin: "AVAX" },
     {
       value: Number(withdrawableDividend / 10 ** 18).toFixed(6),
-      coin: "Dividens",
+      coin: "Market Reflections",
     },
   ]);
 
@@ -37,7 +37,7 @@ export const getUserBalances = async (userAddress) => {
     { value: Number(avaxValance / 10 ** 18).toFixed(4), coin: "AVAX" },
     {
       value: Number(withdrawableDividend / 10 ** 18).toFixed(6),
-      coin: "Dividens",
+      coin: "Market Reflections",
     },
   ];
 };
@@ -89,13 +89,17 @@ export const getMarketNFTs = async () => {
 
 export const getUserNFTs = async (userAddress) => {
   const userNFTs = await NFTcontract.walletOfOwner(userAddress);
+  let userAvaxRewards = 0;
+  let userEarthReflections = 0;
 
-  let tokens = Promise.all(
+  let tokens = await Promise.all(
     await userNFTs.map(async (el) => {
       let metadata;
       let token_uri = await NFTcontract.tokenURI(el);
       let rewards = await NFTcontract.getRewards(el);
       let reflections = await NFTcontract.getReflections(el);
+      userAvaxRewards += Number(rewards.amount);
+      userEarthReflections += Number(reflections);
 
       try {
         let info = await axios.get(token_uri);
@@ -113,7 +117,12 @@ export const getUserNFTs = async (userAddress) => {
     })
   );
 
-  return tokens;
+  return {
+    ids: userNFTs,
+    tokens,
+    userAvaxRewards: Number(userAvaxRewards / 10 ** 18).toFixed(4),
+    userEarthReflections: Number(userEarthReflections / 10 ** 18).toFixed(4),
+  };
 };
 
 export const checkERC721Allowance = async (userAddress) => {
@@ -327,11 +336,11 @@ const tokenContractInstance = async () => {
 
 // NFT WRITE FUNCTIONS
 
-export const claimRewards = async (_tokenId) => {
+export const claimRewards = async (_tokenIds) => {
   try {
     let newNftContract = await nftContractInstance();
 
-    let tx = await newNftContract.claimRewards(_tokenId);
+    let tx = await newNftContract.claimRewards(_tokenIds);
 
     let receipt = await tx.wait();
 
@@ -345,11 +354,11 @@ export const claimRewards = async (_tokenId) => {
   }
 };
 
-export const claimReflections = async (_tokenId) => {
+export const claimReflections = async (_tokenIds) => {
   try {
     let newNftContract = await nftContractInstance();
 
-    let tx = await newNftContract.claimReflections(_tokenId);
+    let tx = await newNftContract.claimReflections(_tokenIds);
 
     let receipt = await tx.wait();
 
@@ -363,13 +372,16 @@ export const claimReflections = async (_tokenId) => {
   }
 };
 
-export const mintNFT = async () => {
+export const mintNFT = async (amount) => {
   try {
     let newNftContract = await nftContractInstance();
 
-    let value = ethers.utils.parseUnits("1.5");
+    let value = ethers.utils.parseUnits((amount * 1.5).toString());
 
-    let tx = await newNftContract.mint({ value, gasLimit: 500000 });
+    let tx = await newNftContract.mint(amount, {
+      value,
+      gasLimit: 400000 * amount,
+    });
 
     let receipt = await tx.wait();
 

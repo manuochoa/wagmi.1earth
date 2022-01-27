@@ -99,6 +99,56 @@ export const NFTabi = [
     type: "event",
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "reflectionsClaimed",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+    ],
+    name: "rewardsClaimed",
+    type: "event",
+  },
+  {
     inputs: [],
     name: "MAX_TOKENS",
     outputs: [
@@ -164,12 +214,25 @@ export const NFTabi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
+        internalType: "uint256[]",
+        name: "tokensIds",
+        type: "uint256[]",
       },
     ],
     name: "claimReflections",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256[]",
+        name: "tokensIds",
+        type: "uint256[]",
+      },
+    ],
+    name: "claimRewards",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -182,7 +245,20 @@ export const NFTabi = [
         type: "uint256",
       },
     ],
-    name: "claimRewards",
+    name: "claimSingleReflection",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "claimSingleReward",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -308,7 +384,13 @@ export const NFTabi = [
     type: "function",
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
     name: "mint",
     outputs: [],
     stateMutability: "payable",
@@ -335,6 +417,19 @@ export const NFTabi = [
         internalType: "string",
         name: "",
         type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "nonDeliveredReflections",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",

@@ -10,12 +10,17 @@ const UserItemCard = (props) => {
       onClick={onClick}
       className={`item-card ${bundle ? "bundle-card" : null}`}
     >
-      <Card.Body>
-        <div className="item-image d-flex justify-content-center align-items-center mt-4 pt-2">
+      <Card.Img
+        className="card-main-img"
+        src={item.metadata.image}
+        alt="NFT Image"
+      />
+      <Card.Body className="d-flex flex-column align-items-center">
+        {/* <div className="item-image d-flex justify-content-center align-items-center mt-4 pt-2">
           <img src={item.metadata?.image} alt="" />
-        </div>
-        {item.metadata?.name ? (
-          <h5 className="m-0 item-name">Token Id: {item.token_id}</h5>
+        </div> */}
+        {item.metadata.name ? (
+          <h5 className="m-0 mb-1 item-name">{item.metadata.name}</h5>
         ) : null}
         {item.metadata?.attributes[0] !== "" ? (
           <div className="tags mt-2 d-flex">

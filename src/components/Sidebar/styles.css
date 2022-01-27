@@ -11,16 +11,35 @@
   background-color: var(--secondary-background);
 }
 
+.marketplace-button {
+  border-radius: 24px !important;
+  background: linear-gradient(
+    127.09deg,
+    var(--secondary-color) -14.32%,
+    var(--main-color) 92.98%
+  ) !important;
+  color: var(--main-text) !important;
+  border: none !important;
+  width: 115px !important;
+  height: 45px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 8px !important;
+}
+
 .text-nft-light {
   color: var(--main-text);
 }
 
 .sidebar .nft-logo img {
-  width: 150px;
+  width: 80%;
 }
 
 .sidebar .nft-logo a {
   cursor: pointer;
+  display: flex;
+  justify-content: center;
 }
 
 .sidebar .nav-tabs {
@@ -161,10 +180,18 @@
   padding: 0 30px;
 }
 
+.sidebar .account .market-tab {
+  justify-content: center !important;
+}
+
 .sidebar .account .account-btn a {
   cursor: pointer;
 }
 
 .sidebar .account .account-btn span.active {
   color: #53b9ea;
+}
+
+.items-tab {
+  padding: 20px;
 }

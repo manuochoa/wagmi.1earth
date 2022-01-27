@@ -14,6 +14,7 @@ import Header from "./components/Header";
 import ItemCard from "./components/ItemCard";
 import SaleInfoCard from "./components/SaleInfoCard";
 import NumberFormat from "react-number-format";
+import avaxLogo from "./assets/Images/avax-logo.png";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -174,28 +175,33 @@ function App({
         <div className="item-preview mt-4">
           <Row className="mt-4">
             <Col xs={5}>
-              <div className="item-image d-flex justify-content-center align-items-center mt-5 mb-5 pt-5 pb-5">
+              <div className="item-image d-flex justify-content-center align-items-center pb-5">
                 <img className="img-fluid" src={item.metadata.image} alt="" />
               </div>
             </Col>
             <Col xs={7}>
               <div className="item-info mt-5 mb-5 pt-5 pb-5">
-                <h5 className="item-number">Token Id: {item.token_id}</h5>
+                <h5 className="item-number">Mint #{item.token_id}</h5>
                 <h3 className="item-name">{item.metadata.name}</h3>
                 <div className="item-price d-flex align-items-center">
-                  <h1 className="me-5">
-                    {item.itemInfo?.price / 10 ** 18} AVAX
-                  </h1>
-                  <Button
-                    disabled={isLoading}
-                    onClick={
-                      userAddress ? () => handleBuy(item) : connectWallet()
-                    }
-                    className="nft-buy-button"
-                  >
-                    Buy now
-                  </Button>
+                  <div className="price-container">
+                    <h1 className="me-3">{item.itemInfo?.price / 10 ** 18}</h1>
+                    <img
+                      className="price-logo-main"
+                      src={avaxLogo}
+                      alt="avax-logo"
+                    />
+                  </div>
                 </div>
+                <Button
+                  disabled={isLoading}
+                  onClick={
+                    userAddress ? () => handleBuy(item) : connectWallet()
+                  }
+                  className="nft-buy-button mt-4"
+                >
+                  Buy now
+                </Button>
               </div>
             </Col>
             <Col xs={6}>
@@ -227,24 +233,31 @@ function App({
 
                   {/* </div> */}
                 </div>
-                <div className="owner-detail mt-4 d-flex align-items-center ">
+                <div className="d-flex mt-3">
+                  <h4>Collection: Nicaragua</h4>
+                </div>
+                {/* <div className="owner-detail mt-2 d-flex align-items-center ">
                   <h4 className="mr-3">
                     Pending Rewards: {item.pendingRewards} AVAX
                   </h4>
                 </div>
-                <div className="owner-detail mt-4 d-flex align-items-center ">
+                <div className="owner-detail mt-2 d-flex align-items-center ">
                   <h4 className="mr-3">
                     Pending Reflections: {item.pendingReflections} $1EARTH
                   </h4>
-                </div>
+                </div> */}
               </div>
             </Col>
             <Col xs={6}>
               <div className="info p-4">
-                <h3 className="mb-4">Bids</h3>
-                <div className="mb-4">
+                <h3 className="mb-3">Bids</h3>
+                <div className="mb-3">
                   <h5>Current Bid: {item.bids.price / 10 ** 18} AVAX</h5>
-                  <span>{item.bids.bidder}</span>
+                  <span>
+                    {item.bids.bidder !==
+                      "0x0000000000000000000000000000000000000000" &&
+                      items.bids.bidder}
+                  </span>
                 </div>
 
                 {userAddress.toLowerCase() ===
@@ -263,7 +276,7 @@ function App({
                     </button>
                   </div>
                 ) : (
-                  <div>
+                  <div className="bid-box">
                     <h5>Place a Bid:</h5>
                     <NumberFormat
                       className="bid-input"

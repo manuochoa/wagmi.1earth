@@ -4,6 +4,10 @@
   position: relative;
   min-height: 300px;
   cursor: pointer;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
 
 .item-card .item-number {
@@ -36,4 +40,20 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.price-logo {
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+}
+
+.price-container {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.card-main-img {
+  border-radius: 10px 10px 0px 0px !important;
 }

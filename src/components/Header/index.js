@@ -16,8 +16,8 @@ const Header = ({
   const location = useLocation();
 
   const navigateToAccount = () => {
-    if (location.pathname !== "/account") {
-      navigate("account");
+    if (location.pathname !== "/") {
+      navigate("/");
     }
   };
 
