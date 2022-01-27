@@ -9,6 +9,7 @@ let provider = new ethers.providers.JsonRpcProvider(
 let marketAddress = "0x1d1A1959eCa03493f2d9ccE099185e32aF90DF82";
 let tokenAddress = "0xAD334fB7743741d98baBb81a07800250Cf1EDE1D";
 let NFTAddress = "0x08A63D7A83418eDF37e8639EEE8a2A5C695f777c";
+let dividenTrackerAddress = "0x342Beac4C2e678537a8923b1d8c86879185D553f";
 
 let marketContract = new ethers.Contract(marketAddress, marketAbi, provider);
 let NFTcontract = new ethers.Contract(NFTAddress, NFTabi, provider);
@@ -19,18 +20,12 @@ let tokenContract = new ethers.Contract(tokenAddress, tokenAbi, provider);
 export const getUserBalances = async (userAddress) => {
   let tokenBalance = await tokenContract.balanceOf(userAddress);
   let avaxValance = await provider.getBalance(userAddress);
+  let dividendBalance = await provider.getBalance(dividenTrackerAddress);
   let withdrawableDividend = await tokenContract.withdrawableDividendOf(
     userAddress
   );
 
-  console.log("balances", [
-    { value: Number(tokenBalance / 10 ** 18).toFixed(2), coin: "$1EARTH" },
-    { value: Number(avaxValance / 10 ** 18).toFixed(4), coin: "AVAX" },
-    {
-      value: Number(withdrawableDividend / 10 ** 18).toFixed(6),
-      coin: "Market Reflections",
-    },
-  ]);
+  console.log("balances", dividendBalance.toString());
 
   return [
     { value: Number(tokenBalance / 10 ** 18).toFixed(2), coin: "$1EARTH" },
@@ -54,6 +49,7 @@ export const getMintedNFTs = async () => {
 
 export const getMarketNFTs = async () => {
   const marketNFTs = await NFTcontract.walletOfOwner(marketAddress);
+  let floorPrice = 0;
 
   let tokens = await Promise.all(
     await marketNFTs.map(async (el) => {

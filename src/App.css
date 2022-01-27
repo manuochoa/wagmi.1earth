@@ -22,6 +22,7 @@ body .App .container-fluid {
   font-size: 14px !important;
   background-color: #57567b !important;
   cursor: default;
+  text-transform: capitalize !important;
 }
 
 .nft-Endangered {

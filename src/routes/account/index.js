@@ -135,10 +135,10 @@ const Account = ({
     let result = await claim();
     if (result) {
       console.log(result);
+      getInventoryNFTs();
+      loadUserBalances();
     }
 
-    getInventoryNFTs();
-    loadUserBalances();
     setIsLoading(false);
   };
 
@@ -148,10 +148,10 @@ const Account = ({
     let result = await claimRewards(userTokensIds);
     if (result) {
       console.log(result);
+      getInventoryNFTs();
+      loadUserBalances();
     }
 
-    getInventoryNFTs();
-    loadUserBalances();
     setIsLoading(false);
   };
 
@@ -161,10 +161,10 @@ const Account = ({
     let result = await claimReflections(userTokensIds);
     if (result) {
       console.log(result);
+      getInventoryNFTs();
+      loadUserBalances();
     }
 
-    getInventoryNFTs();
-    loadUserBalances();
     setIsLoading(false);
   };
 
@@ -174,10 +174,9 @@ const Account = ({
     let result = await mintNFT(amountToMint);
     if (result) {
       console.log(result);
+      getInventoryNFTs();
+      loadUserBalances();
     }
-
-    getInventoryNFTs();
-    loadUserBalances();
 
     setIsLoading(false);
   };
