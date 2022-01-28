@@ -6,10 +6,10 @@ let provider = new ethers.providers.JsonRpcProvider(
   "https://api.avax-test.network/ext/bc/C/rpc"
 );
 
-let marketAddress = "0x1d1A1959eCa03493f2d9ccE099185e32aF90DF82";
-let tokenAddress = "0xAD334fB7743741d98baBb81a07800250Cf1EDE1D";
-let NFTAddress = "0x08A63D7A83418eDF37e8639EEE8a2A5C695f777c";
-let dividenTrackerAddress = "0x342Beac4C2e678537a8923b1d8c86879185D553f";
+let marketAddress = "0x729cD2E78068c6D4105e79CCb2A9d0Ce17A8c231";
+let tokenAddress = "0xd976704dEAFE29B3A3fcCd0B2F4374E35Ba46bc7";
+let NFTAddress = "0xb60eb671351eC39971f16c173fA8d52787Aeadd7";
+let dividenTrackerAddress = "0x82306F93D84fdf3429f8bCf9e569c772525fB052";
 
 let marketContract = new ethers.Contract(marketAddress, marketAbi, provider);
 let NFTcontract = new ethers.Contract(NFTAddress, NFTabi, provider);
@@ -208,6 +208,7 @@ export const executeOrder = async (_tokenId, value) => {
     let receipt = await tx.wait();
 
     console.log(receipt);
+    return receipt;
   } catch (error) {
     console.log(error, "executeOrder");
     if (error.data) {

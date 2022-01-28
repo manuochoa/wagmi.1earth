@@ -45,8 +45,20 @@ function App({
     marketAllowance: false,
     bundlerAllowance: false,
   });
+  const [filter, setFilter] = useState({
+    Unique: false,
+    "shiny Endangered": false,
+    Shiny: false,
+    Endangered: false,
+    Common: false,
+  });
 
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    getItems();
+    console.log("hola");
+  }, [filter]);
 
   const itemSaleHistory = [
     {
@@ -82,8 +94,8 @@ function App({
 
     if (receipt) {
       console.log(receipt);
-      getItems();
       setIsPreviewItem(false);
+      getItems();
     }
 
     setIsLoading(false);
@@ -222,7 +234,7 @@ function App({
                           : item.metadata.attributes[0]?.value === "Unique"
                           ? "rarity-badge nft-Unique"
                           : item.metadata.attributes[0]?.value ===
-                            "Shiny Endangered"
+                            "shiny Endangered"
                           ? "rarity-badge nft-sEndangered"
                           : "rarity-badge"
                       }
@@ -307,7 +319,11 @@ function App({
   return (
     <div className="App">
       <Container fluid>
-        <Sidebar userAddress={userAddress} />
+        <Sidebar
+          filter={filter}
+          setFilter={setFilter}
+          userAddress={userAddress}
+        />
         <div className="page-content">
           <Row>
             <Col xs={12}>

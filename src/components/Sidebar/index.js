@@ -37,7 +37,8 @@ import userAvatar from "../../assets/Images/user-avatar-large.png";
 import scanIcon from "../../assets/Images/icons/scan.png";
 
 const Sidebar = (props) => {
-  const { isAccount, onAccountTabChange, userAddress } = props;
+  const { isAccount, onAccountTabChange, userAddress, setFilter, filter } =
+    props;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -77,6 +78,14 @@ const Sidebar = (props) => {
     navigate("/marketplace");
   };
 
+  const handleChange = (e, type) => {
+    let temp = filter;
+    temp[type] = !temp[type];
+    setFilter(temp);
+    console.log(temp);
+    console.log("handleChange", e.target.value);
+  };
+
   const giftTab = () => {
     return (
       <Row>
@@ -106,7 +115,10 @@ const Sidebar = (props) => {
         </Col>
         <Col xs={6}>
           <InputGroup className="mb-2 mt-2">
-            <InputGroup.Checkbox aria-label="Common" />
+            <InputGroup.Checkbox
+              onChange={(e) => handleChange(e, "Common")}
+              aria-label="Common"
+            />
             <h6>
               <Badge className="rarity-badge">Common</Badge>
             </h6>
@@ -114,7 +126,10 @@ const Sidebar = (props) => {
         </Col>
         <Col xs={6}>
           <InputGroup className="mb-2 mt-2">
-            <InputGroup.Checkbox aria-label="Endangered" />
+            <InputGroup.Checkbox
+              onChange={(e) => handleChange(e, "Endangered")}
+              aria-label="Endangered"
+            />
             <h6>
               <Badge className="rarity-badge nft-Endangered">Endangered</Badge>
             </h6>
@@ -122,7 +137,10 @@ const Sidebar = (props) => {
         </Col>
         <Col xs={6}>
           <InputGroup className="mb-2 mt-2">
-            <InputGroup.Checkbox aria-label="Shiny" />
+            <InputGroup.Checkbox
+              onChange={(e) => handleChange(e, "Shiny")}
+              aria-label="Shiny"
+            />
             <h6>
               <Badge className="rarity-badge nft-Shiny">Shiny</Badge>
             </h6>
@@ -130,7 +148,10 @@ const Sidebar = (props) => {
         </Col>
         <Col xs={6}>
           <InputGroup className="mb-2 mt-2">
-            <InputGroup.Checkbox aria-label="Unique" />
+            <InputGroup.Checkbox
+              onChange={(e) => handleChange(e, "Unique")}
+              aria-label="Unique"
+            />
             <h6>
               <Badge className="rarity-badge nft-Unique">Unique</Badge>
             </h6>
@@ -138,7 +159,10 @@ const Sidebar = (props) => {
         </Col>
         <Col xs={8}>
           <InputGroup className="mb-2 mt-2">
-            <InputGroup.Checkbox aria-label="Shiny Endangered" />
+            <InputGroup.Checkbox
+              onChange={(e) => handleChange(e, "shiny Endangered")}
+              aria-label="Shiny Endangered"
+            />
             <h6>
               <Badge className="rarity-badge nft-sEndangered">
                 Shiny Endangered
