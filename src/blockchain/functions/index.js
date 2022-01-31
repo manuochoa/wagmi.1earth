@@ -6,10 +6,10 @@ let provider = new ethers.providers.JsonRpcProvider(
   "https://api.avax-test.network/ext/bc/C/rpc"
 );
 
-let marketAddress = "0x729cD2E78068c6D4105e79CCb2A9d0Ce17A8c231";
-let tokenAddress = "0xd976704dEAFE29B3A3fcCd0B2F4374E35Ba46bc7";
-let NFTAddress = "0xb60eb671351eC39971f16c173fA8d52787Aeadd7";
-let dividenTrackerAddress = "0x82306F93D84fdf3429f8bCf9e569c772525fB052";
+let marketAddress = "0x367cD097Ce16Bfde52F17A144C58421E46dEc59E";
+let tokenAddress = "0xf328B9a9739097E21B41429891DC1Dd3645a80d1";
+let NFTAddress = "0xabD6279BEBD08257f69f8c20e7666C3301768Aa5";
+let dividenTrackerAddress = "0x704589d6d5BF1dedAC67a7521290Ab8A4f06452b";
 
 let marketContract = new ethers.Contract(marketAddress, marketAbi, provider);
 let NFTcontract = new ethers.Contract(NFTAddress, NFTabi, provider);
@@ -373,7 +373,7 @@ export const mintNFT = async (amount) => {
   try {
     let newNftContract = await nftContractInstance();
 
-    let value = ethers.utils.parseUnits((amount * 1.5).toString());
+    let value = ethers.utils.parseUnits((amount * 0.1).toString());
 
     let tx = await newNftContract.mint(amount, {
       value,

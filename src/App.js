@@ -245,6 +245,9 @@ function App({
 
                   {/* </div> */}
                 </div>
+                <div className="d-flex">
+                  <h4>Class: {item.metadata.attributes[1]?.value}</h4>
+                </div>
                 <div className="d-flex mt-3">
                   <h4>Collection: Nicaragua</h4>
                 </div>

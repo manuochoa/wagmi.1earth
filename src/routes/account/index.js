@@ -52,7 +52,7 @@ const Account = ({
   const [isLoading, setIsLoading] = useState(false);
   const [price, setPrice] = useState("");
   const [marketAllowance, setMarketAllowance] = useState(false);
-  const [amountToMint, setAmountToMint] = useState("");
+  const [amountToMint, setAmountToMint] = useState("1");
 
   const getInventoryNFTs = async () => {
     let totalSupply = await getMintedNFTs();
@@ -320,8 +320,9 @@ const Account = ({
                       {item.metadata.attributes[0]?.value}
                     </Badge>
                   </div>
-
-                  {/* </div> */}
+                </div>
+                <div className="d-flex">
+                  <h4>Class: {item.metadata.attributes[1]?.value}</h4>
                 </div>
                 <div className="owner-detail mt-2 d-flex align-items-center ">
                   <h4 className="mr-3">
@@ -436,6 +437,9 @@ const Account = ({
                     >
                       {item.metadata.attributes[0]?.value}
                     </Badge>
+                  </div>
+                  <div className="d-flex">
+                    <h4>Class: {item.metadata.attributes[1]?.value}</h4>
                   </div>
 
                   {/* </div> */}
@@ -598,6 +602,12 @@ const Account = ({
             <div className="mt-3">
               <h4>Total NFTs minted: {minted}/2763</h4>
               <h4>Mint a new NFT</h4>
+              <div className="price-container">
+                <h4 className="d-flex justify-content-center align-items-center">
+                  {2 * amountToMint}{" "}
+                  <img className="price-logo" src={avaxLogo} alt="avax-logo" />
+                </h4>
+              </div>
               <div className="d-flex flex-row align-items-center justify-content-center">
                 <button
                   className="mint-icon"
