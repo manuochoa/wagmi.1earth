@@ -49,7 +49,7 @@ export const getMintedNFTs = async () => {
 
 export const getMarketNFTs = async () => {
   const marketNFTs = await NFTcontract.walletOfOwner(marketAddress);
-  let floorPrice = 0;
+  let floorPrice = "";
 
   let tokens = await Promise.all(
     await marketNFTs.map(async (el) => {
@@ -59,6 +59,12 @@ export const getMarketNFTs = async () => {
       let token_uri = await NFTcontract.tokenURI(el);
       let rewards = await NFTcontract.getRewards(el);
       let reflections = await NFTcontract.getReflections(el);
+
+      if (floorPrice === "") {
+        floorPrice = itemInfo.price;
+      } else if (floorPrice > itemInfo.price) {
+        floorPrice = itemInfo.price;
+      }
 
       try {
         let info = await axios.get(token_uri);
@@ -80,7 +86,7 @@ export const getMarketNFTs = async () => {
   );
 
   console.log(tokens, "market");
-  return tokens;
+  return { tokens, floorPrice };
 };
 
 export const getUserNFTs = async (userAddress) => {

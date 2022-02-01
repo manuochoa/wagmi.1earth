@@ -36,7 +36,9 @@ function App({
   connectWallet,
   userBalances,
   items,
+  setItems,
   getItems,
+  floorPrice,
 }) {
   const [activeItem, setActiveItem] = useState(0);
   const [isPreviewItem, setIsPreviewItem] = useState(false);
@@ -45,20 +47,11 @@ function App({
     marketAllowance: false,
     bundlerAllowance: false,
   });
-  const [filter, setFilter] = useState({
-    Unique: false,
-    "shiny Endangered": false,
-    Shiny: false,
-    Endangered: false,
-    Common: false,
-  });
+  const [rarityFilter, setRarityFilter] = useState("All");
+  const [classFilter, setClassFilter] = useState("All");
+  const [priceFilter, setPriceFilter] = useState("All");
 
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    getItems();
-    console.log("hola");
-  }, [filter]);
 
   const itemSaleHistory = [
     {
@@ -150,6 +143,17 @@ function App({
     );
   };
 
+  const sortItems = (value) => {
+    let temp = items;
+    if (value === "High to Low") {
+      temp.sort((a, b) => b.itemInfo.price - a.itemInfo.price);
+    } else if (value === "Low to High") {
+      temp.sort((a, b) => a.itemInfo.price - b.itemInfo.price);
+    }
+
+    setItems(temp);
+  };
+
   const renderItems = () => {
     return (
       <div className="items-section">
@@ -157,7 +161,7 @@ function App({
         <div className="section-items mt-4 mb-4">
           <Row>
             {items.map((item, index) => {
-              return (
+              return rarityFilter === "All" && classFilter === "All" ? (
                 <div key={index} className="col-2 mt-4">
                   <ItemCard
                     onClick={() => {
@@ -167,6 +171,41 @@ function App({
                     item={item}
                   />
                 </div>
+              ) : item.metadata?.attributes[0]?.value === rarityFilter &&
+                classFilter === "All" ? (
+                <div key={index} className="col-2 mt-4">
+                  <ItemCard
+                    onClick={() => {
+                      setActiveItem(index);
+                      setIsPreviewItem(true);
+                    }}
+                    item={item}
+                  />
+                </div>
+              ) : item.metadata?.attributes[1]?.value === classFilter &&
+                rarityFilter === "All" ? (
+                <div key={index} className="col-2 mt-4">
+                  <ItemCard
+                    onClick={() => {
+                      setActiveItem(index);
+                      setIsPreviewItem(true);
+                    }}
+                    item={item}
+                  />
+                </div>
+              ) : (
+                item.metadata?.attributes[1]?.value === classFilter &&
+                item.metadata?.attributes[0]?.value === rarityFilter && (
+                  <div key={index} className="col-2 mt-4">
+                    <ItemCard
+                      onClick={() => {
+                        setActiveItem(index);
+                        setIsPreviewItem(true);
+                      }}
+                      item={item}
+                    />
+                  </div>
+                )
               );
             })}
           </Row>
@@ -231,10 +270,10 @@ function App({
                           ? "rarity-badge nft-Endangered"
                           : item.metadata.attributes[0]?.value === "Shiny"
                           ? "rarity-badge nft-Shiny"
-                          : item.metadata.attributes[0]?.value === "Unique"
+                          : item.metadata.attributes[0]?.value === "unique"
                           ? "rarity-badge nft-Unique"
                           : item.metadata.attributes[0]?.value ===
-                            "shiny Endangered"
+                            "Shiny Endangered"
                           ? "rarity-badge nft-sEndangered"
                           : "rarity-badge"
                       }
@@ -323,9 +362,15 @@ function App({
     <div className="App">
       <Container fluid>
         <Sidebar
-          filter={filter}
-          setFilter={setFilter}
+          classFilter={classFilter}
+          setClassFilter={setClassFilter}
+          rarityFilter={rarityFilter}
+          setRarityFilter={setRarityFilter}
           userAddress={userAddress}
+          floorPrice={floorPrice}
+          priceFilter={priceFilter}
+          setPriceFilter={setPriceFilter}
+          sortItems={sortItems}
         />
         <div className="page-content">
           <Row>

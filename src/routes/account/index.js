@@ -303,26 +303,26 @@ const Account = ({
                   <div className="badge-container">
                     <Badge
                       className={
-                        item.metadata.attributes[0]?.value === "Common"
+                        item.metadata?.attributes[0]?.value === "Common"
                           ? "rarity-badge"
-                          : item.metadata.attributes[0]?.value === "Endangered"
+                          : item.metadata?.attributes[0]?.value === "Endangered"
                           ? "rarity-badge nft-Endangered"
-                          : item.metadata.attributes[0]?.value === "Shiny"
+                          : item.metadata?.attributes[0]?.value === "Shiny"
                           ? "rarity-badge nft-Shiny"
-                          : item.metadata.attributes[0]?.value === "Unique"
+                          : item.metadata?.attributes[0]?.value === "Unique"
                           ? "rarity-badge nft-Unique"
-                          : item.metadata.attributes[0]?.value ===
+                          : item.metadata?.attributes[0]?.value ===
                             "Shiny Endangered"
                           ? "rarity-badge nft-sEndangered"
                           : "rarity-badge"
                       }
                     >
-                      {item.metadata.attributes[0]?.value}
+                      {item.metadata?.attributes[0]?.value}
                     </Badge>
                   </div>
                 </div>
                 <div className="d-flex">
-                  <h4>Class: {item.metadata.attributes[1]?.value}</h4>
+                  <h4>Class: {item.metadata?.attributes[1]?.value}</h4>
                 </div>
                 <div className="owner-detail mt-2 d-flex align-items-center ">
                   <h4 className="mr-3">
@@ -378,13 +378,13 @@ const Account = ({
           <Row className="mt-4">
             <Col xs={5}>
               <div className="item-image d-flex justify-content-center align-items-center pb-5">
-                <img className="img-fluid" src={item.metadata.image} alt="" />
+                <img className="img-fluid" src={item.metadata?.image} alt="" />
               </div>
             </Col>
             <Col xs={7}>
               <div className="item-info mt-5 mb-5 pt-5 pb-5">
                 <h5 className="item-number">Mint #{item.token_id}</h5>
-                <h3 className="item-name">{item.metadata.name}</h3>
+                <h3 className="item-name">{item.metadata?.name}</h3>
                 <div className="item-price d-flex align-items-center">
                   <div className="item-price d-flex align-items-center">
                     <div className="price-container">
@@ -421,25 +421,25 @@ const Account = ({
                   <div className="badge-container">
                     <Badge
                       className={
-                        item.metadata.attributes[0]?.value === "Common"
+                        item.metadata?.attributes[0]?.value === "Common"
                           ? "rarity-badge"
-                          : item.metadata.attributes[0]?.value === "Endangered"
+                          : item.metadata?.attributes[0]?.value === "Endangered"
                           ? "rarity-badge nft-Endangered"
-                          : item.metadata.attributes[0]?.value === "Shiny"
+                          : item.metadata?.attributes[0]?.value === "Shiny"
                           ? "rarity-badge nft-Shiny"
-                          : item.metadata.attributes[0]?.value === "Unique"
+                          : item.metadata?.attributes[0]?.value === "unique"
                           ? "rarity-badge nft-Unique"
-                          : item.metadata.attributes[0]?.value ===
+                          : item.metadata?.attributes[0]?.value ===
                             "Shiny Endangered"
                           ? "rarity-badge nft-sEndangered"
                           : "rarity-badge"
                       }
                     >
-                      {item.metadata.attributes[0]?.value}
+                      {item.metadata?.attributes[0]?.value}
                     </Badge>
                   </div>
                   <div className="d-flex">
-                    <h4>Class: {item.metadata.attributes[1]?.value}</h4>
+                    <h4>Class: {item.metadata?.attributes[1]?.value}</h4>
                   </div>
 
                   {/* </div> */}

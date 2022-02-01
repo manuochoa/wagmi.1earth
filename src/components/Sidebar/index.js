@@ -35,17 +35,28 @@ import bronze from "../../assets/Images/icons/bronze.png";
 import dropdownIcon from "../../assets/Images/icons/dropdown.png";
 import userAvatar from "../../assets/Images/user-avatar-large.png";
 import scanIcon from "../../assets/Images/icons/scan.png";
+import avaxLogo from "../../assets/Images/avax-logo.png";
 
 const Sidebar = (props) => {
-  const { isAccount, onAccountTabChange, userAddress, setFilter, filter } =
-    props;
+  const {
+    floorPrice,
+    isAccount,
+    onAccountTabChange,
+    userAddress,
+    rarityFilter,
+    setRarityFilter,
+    priceFilter,
+    setPriceFilter,
+    sortItems,
+    classFilter,
+    setClassFilter,
+  } = props;
 
   const navigate = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState("items");
   const [itemsActiveTab, setItemsActiveTab] = useState("gift");
   const [activeAccountTab, setActiveAccountTab] = useState("account");
-  const [priceFilter, setPriceFilter] = useState("All");
 
   const tickets = [
     { value: 1 },
@@ -78,14 +89,6 @@ const Sidebar = (props) => {
     navigate("/marketplace");
   };
 
-  const handleChange = (e, type) => {
-    let temp = filter;
-    temp[type] = !temp[type];
-    setFilter(temp);
-    console.log(temp);
-    console.log("handleChange", e.target.value);
-  };
-
   const giftTab = () => {
     return (
       <Row>
@@ -103,14 +106,85 @@ const Sidebar = (props) => {
                 <img src={dropdownIcon} alt="" />
               </span>
             }
-            onSelect={(value) => setPriceFilter(value)}
+            onSelect={(value) => {
+              setPriceFilter(value);
+              sortItems(value);
+            }}
           >
             <Dropdown.Item eventKey="All">All</Dropdown.Item>
             <Dropdown.Item eventKey="High to Low">High to Low</Dropdown.Item>
             <Dropdown.Item eventKey="Low to High">Low to High</Dropdown.Item>
           </DropdownButton>
         </Col>
+        <Col className="mt-4" xs={12}>
+          <h6 className="text-uppercase mt-2 text-nft-light">Rarity</h6>
+        </Col>
         <Col xs={12}>
+          <DropdownButton
+            variant="outline-secondary"
+            id="input-group-dropdown-1"
+            className="nft-dropdown mt-3"
+            title={
+              <span className="d-flex justify-content-between align-items-center">
+                <h6 className="m-0">{rarityFilter}</h6>
+                <img src={dropdownIcon} alt="" />
+              </span>
+            }
+            onSelect={(value) => {
+              setRarityFilter(value);
+              setPriceFilter("All");
+            }}
+          >
+            <Dropdown.Item eventKey="All">ALL</Dropdown.Item>
+            <Dropdown.Item eventKey="Common">
+              <Badge className="rarity-badge">Common</Badge>
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="Endangered">
+              <Badge className="rarity-badge nft-Endangered">Endangered</Badge>
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="Shiny">
+              <Badge className="rarity-badge nft-Shiny">Shiny</Badge>
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="unique">
+              <Badge className="rarity-badge nft-Unique">Unique</Badge>
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="Shiny Endangered">
+              <Badge className="rarity-badge nft-sEndangered">
+                Shiny Endangered
+              </Badge>
+            </Dropdown.Item>
+          </DropdownButton>
+        </Col>
+        <Col className="mt-4" xs={12}>
+          <h6 className="text-uppercase mt-2 text-nft-light">Class</h6>
+        </Col>
+        <Col xs={12}>
+          <DropdownButton
+            variant="outline-secondary"
+            id="input-group-dropdown-1"
+            className="nft-dropdown mt-3"
+            title={
+              <span className="d-flex justify-content-between align-items-center">
+                <h6 className="m-0">{classFilter}</h6>
+                <img src={dropdownIcon} alt="" />
+              </span>
+            }
+            onSelect={(value) => {
+              setClassFilter(value);
+              setPriceFilter("All");
+            }}
+          >
+            <Dropdown.Item eventKey="All">ALL</Dropdown.Item>
+            <Dropdown.Item eventKey="Amphibian">Amphibian</Dropdown.Item>
+            <Dropdown.Item eventKey="Animal">Animal</Dropdown.Item>
+            <Dropdown.Item eventKey="Bird">Bird</Dropdown.Item>
+            <Dropdown.Item eventKey="Environment">Environment</Dropdown.Item>
+            <Dropdown.Item eventKey="Insect">Insect</Dropdown.Item>
+            <Dropdown.Item eventKey="Plant">Plant</Dropdown.Item>
+            <Dropdown.Item eventKey="Reptile">Reptile</Dropdown.Item>
+          </DropdownButton>
+        </Col>
+        {/* <Col xs={12}>
           <h6 className="text-uppercase mt-2 text-nft-light">Rarity</h6>
         </Col>
         <Col xs={6}>
@@ -169,6 +243,12 @@ const Sidebar = (props) => {
               </Badge>
             </h6>
           </InputGroup>
+        </Col> */}
+        <Col className="d-flex align-items-center mt-4" xs={12}>
+          <h6 className="text-uppercase mt-2 text-nft-light">
+            Floor Price: {Number(floorPrice) / 10 ** 18}
+          </h6>
+          <img className="price-logo" src={avaxLogo} alt="avax-logo" />
         </Col>
       </Row>
     );

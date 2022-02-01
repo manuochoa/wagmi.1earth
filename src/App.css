@@ -57,6 +57,7 @@ body .App .container-fluid {
   box-shadow: none !important;
   width: 100%;
   color: var(--main-text) !important;
+  text-transform: capitalize;
 }
 
 .nft-button {

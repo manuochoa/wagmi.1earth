@@ -8,6 +8,7 @@ function Home() {
   const [userAddress, setUserAddress] = useState("");
   const [userBalances, setUserBalances] = useState([]);
   const [items, setItems] = useState([]);
+  const [floorPrice, setFloorPrice] = useState("");
 
   const connectWallet = async () => {
     console.log("hola");
@@ -61,7 +62,8 @@ function Home() {
   const getItems = async () => {
     let result = await getMarketNFTs();
     if (result) {
-      setItems(result);
+      setItems(result.tokens);
+      setFloorPrice(result.floorPrice);
     }
   };
 
@@ -86,7 +88,9 @@ function Home() {
               connectWallet={connectWallet}
               userBalances={userBalances}
               items={items}
+              setItems={setItems}
               getItems={getItems}
+              floorPrice={floorPrice}
             />
           }
         />
