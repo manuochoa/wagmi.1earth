@@ -32,7 +32,7 @@ const UserItemCard = (props) => {
                   ? "rarity-badge nft-Endangered"
                   : item.metadata.attributes[0]?.value === "Shiny"
                   ? "rarity-badge nft-Shiny"
-                  : item.metadata.attributes[0]?.value === "Unique"
+                  : item.metadata.attributes[0]?.value === "unique"
                   ? "rarity-badge nft-Unique"
                   : item.metadata.attributes[0]?.value === "Shiny Endangered"
                   ? "rarity-badge nft-sEndangered"
