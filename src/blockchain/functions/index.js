@@ -61,9 +61,9 @@ export const getMarketNFTs = async () => {
       let reflections = await NFTcontract.getReflections(el);
 
       if (floorPrice === "") {
-        floorPrice = itemInfo.price;
-      } else if (floorPrice > itemInfo.price) {
-        floorPrice = itemInfo.price;
+        floorPrice = Number(itemInfo.price);
+      } else if (Number(floorPrice) > Number(itemInfo.price)) {
+        floorPrice = Number(itemInfo.price);
       }
 
       try {

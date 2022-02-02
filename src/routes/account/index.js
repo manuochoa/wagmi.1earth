@@ -598,7 +598,7 @@ const Account = ({
         <SectionHeader headerTitle="Home" />
         <Row className="mb-4">
           <Col xs={4} className="mt-4"></Col>
-          <Col xs={4} className="mt-4 dashboard-block">
+          <Col xs={4} className="mt-4 pb-3 dashboard-block">
             <div className="mt-3">
               <h4>Total NFTs minted: {minted}/2763</h4>
               <h4>Mint a new NFT</h4>
