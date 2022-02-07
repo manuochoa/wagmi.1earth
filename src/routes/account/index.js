@@ -652,7 +652,7 @@ const Account = ({
               <h4>You hold {tokensHold.toString()} tokens</h4>
               <div className="price-container">
                 <h4 className="d-flex justify-content-center align-items-center">
-                  {100 * tokensHold}{" "}
+                  {tokensClaimed ? "0" : 100 * tokensHold}
                   <img className="price-logo" src={earthLogo} alt="avax-logo" />
                 </h4>
               </div>
