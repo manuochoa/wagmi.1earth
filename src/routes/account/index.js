@@ -3,13 +3,7 @@ import { Button, Col, Container, Row, Badge, Form } from "react-bootstrap";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import "./styles.css";
-
-// IMAGES
-import musicGray from "../../assets/Images/icons/music-gray.png";
-import playGray from "../../assets/Images/icons/play-gray.png";
-import imageGray from "../../assets/Images/icons/Image-gray.png";
 import arrowLeft from "../../assets/Images/icons/arrow-left.png";
-import itemImage from "../../assets/Images/item.png";
 import UserItemCard from "../../components/UserItemCard";
 import NumberFormat from "react-number-format";
 import avaxLogo from "../../assets/Images/avax-logo.png";
@@ -28,6 +22,8 @@ import {
   claimReflections,
   mintNFT,
   getMintedNFTs,
+  getTokensHold,
+  claimAirdrop,
 } from "../../blockchain/functions";
 
 const Account = ({
@@ -53,6 +49,7 @@ const Account = ({
   const [price, setPrice] = useState("");
   const [marketAllowance, setMarketAllowance] = useState(false);
   const [amountToMint, setAmountToMint] = useState("1");
+  const [tokensHold, setTokensHold] = useState("");
 
   const getInventoryNFTs = async () => {
     let totalSupply = await getMintedNFTs();
@@ -61,7 +58,6 @@ const Account = ({
     }
     if (userAddress) {
       let receipt = await getUserNFTs(userAddress);
-      console.log(receipt, "inventory");
 
       if (receipt) {
         setItems(receipt.tokens);
@@ -168,6 +164,18 @@ const Account = ({
     setIsLoading(false);
   };
 
+  const handleAirdrop = async () => {
+    setIsLoading(true);
+
+    let result = await claimAirdrop();
+    if (result) {
+      console.log(result);
+      loadUserBalances();
+    }
+
+    setIsLoading(false);
+  };
+
   const handleMint = async () => {
     setIsLoading(true);
 
@@ -189,15 +197,16 @@ const Account = ({
       if (orders) {
         setUserOrders(orders);
       }
-      console.log(orders, "orders");
     }
   };
 
   const checkAllowance = async (_tokenId) => {
     if (userAddress) {
       let result = await checkERC721Allowance(userAddress);
-      if (result) {
+      let tokensUserHold = await getTokensHold(userAddress);
+      if (result || tokensUserHold) {
         setMarketAllowance(result);
+        setTokensHold(tokensUserHold);
       }
     }
   };
@@ -597,7 +606,7 @@ const Account = ({
       <div className="activity-section">
         <SectionHeader headerTitle="Home" />
         <Row className="mb-4">
-          <Col xs={4} className="mt-4"></Col>
+          <Col xs={1} className="mt-4"></Col>
           <Col xs={4} className="mt-4 pb-3 dashboard-block">
             <div className="mt-3">
               <h4>Total NFTs minted: {minted}/2763</h4>
@@ -634,7 +643,25 @@ const Account = ({
               </button>
             </div>
           </Col>
-          <Col xs={4} className="mt-4"></Col>
+          <Col xs={2} className="mt-4"></Col>
+          <Col xs={4} className="mt-4 pb-3 dashboard-block">
+            <div className="mt-3">
+              <h4>Claim $1EARTH Tokens</h4>
+              <h4>You hold {tokensHold.toString()} tokens</h4>
+              <div className="price-container">
+                <h4 className="d-flex justify-content-center align-items-center">
+                  {200 * tokensHold}{" "}
+                  <img className="price-logo" src={earthLogo} alt="avax-logo" />
+                </h4>
+              </div>
+              <h5> Claim your tokens</h5>
+
+              <button disabled={isLoading} onClick={handleAirdrop}>
+                Claim
+              </button>
+            </div>
+          </Col>
+          <Col xs={1} className="mt-4"></Col>
         </Row>
         <Row>
           <Col xs={3} className="mt-4 pb-3 dashboard-block">

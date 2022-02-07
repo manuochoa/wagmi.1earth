@@ -16,10 +16,7 @@ const ItemCard = (props) => {
         src={item.metadata.image}
         alt="NFT Image"
       />
-      {/* <div className="item-image d-flex justify-content-center align-items-center mt-4 pt-2">
-          <img src={item.metadata.image} alt="" />
-        </div>
-      </Card.Img> */}
+
       <Card.Body className="d-flex flex-column align-items-center">
         <div className="price-container">
           <h3 className="mt-1 mb-1 item-price d-flex justify-content-between align-items-center">

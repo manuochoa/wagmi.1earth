@@ -2,30 +2,60 @@ import { ethers } from "ethers";
 import { NFTabi, marketAbi, tokenAbi } from "../abis";
 import axios from "axios";
 
+// MAINNET Provider
+// let provider = new ethers.providers.JsonRpcProvider(
+//   "https://api.avax.network/ext/bc/C/rpc"
+// );
+
+// WAGMI Provider
 let provider = new ethers.providers.JsonRpcProvider(
-  "https://api.avax-test.network/ext/bc/C/rpc"
+  "https://api.trywagmi.xyz/rpc"
 );
 
-let marketAddress = "0x367cD097Ce16Bfde52F17A144C58421E46dEc59E";
-let tokenAddress = "0xf328B9a9739097E21B41429891DC1Dd3645a80d1";
-let NFTAddress = "0xabD6279BEBD08257f69f8c20e7666C3301768Aa5";
-let dividenTrackerAddress = "0x704589d6d5BF1dedAC67a7521290Ab8A4f06452b";
+// TESTNET Provider
+// let provider = new ethers.providers.JsonRpcProvider(
+//   "https://api.avax-test.network/ext/bc/C/rpc"
+// );
+
+// MAINNET AVAX
+// let marketAddress = "0x947B763c512164D7E866fc1fF79A35865E0F2E44";
+// let tokenAddress = "0x64C95d1a03c7FcC197D4b851Bab89F7492681915";
+// let NFTAddress = "0x2dFC24B8Ca9C9d95984edD8ba5B467d7682C57f0";
+// let dividenTrackerAddress = "0x66F56D8A954Bc668145F92a40a54807b2cd9cAde";
+
+// TESTNET WAGMI
+let marketAddress = "0x81e14EacEC2a9f7865d1933FbCC4a382Caf1DBC3";
+let tokenAddress = "0x00055bdAdA10734bff62647dcE3A32CB03762a05";
+let NFTAddress = "0xEe73Db920d392A89F5b016E86D3507Bbd7946936";
+let dividenTrackerAddress = "0x2D1E692e38fE27C5408dD1a00ecBfb1Ef626C646";
+let vestingAddress = "0x7d6a134C93416b91403Ce77C55A29314F58943cF";
+
+// TESTNET AVAX
+// let marketAddress = "0x367cD097Ce16Bfde52F17A144C58421E46dEc59E";
+// let tokenAddress = "0xf328B9a9739097E21B41429891DC1Dd3645a80d1";
+// let NFTAddress = "0xabD6279BEBD08257f69f8c20e7666C3301768Aa5";
+// let dividenTrackerAddress = "0x704589d6d5BF1dedAC67a7521290Ab8A4f06452b";
 
 let marketContract = new ethers.Contract(marketAddress, marketAbi, provider);
 let NFTcontract = new ethers.Contract(NFTAddress, NFTabi, provider);
 let tokenContract = new ethers.Contract(tokenAddress, tokenAbi, provider);
+let vestingContract = new ethers.Contract(
+  vestingAddress,
+  [
+    "function getTokensHold (address user) external view returns (uint256 amount)",
+    "function claim() external",
+  ],
+  provider
+);
 
 // TOKEN VIEW FUNCTIONS
 
 export const getUserBalances = async (userAddress) => {
   let tokenBalance = await tokenContract.balanceOf(userAddress);
   let avaxValance = await provider.getBalance(userAddress);
-  let dividendBalance = await provider.getBalance(dividenTrackerAddress);
   let withdrawableDividend = await tokenContract.withdrawableDividendOf(
     userAddress
   );
-
-  console.log("balances", dividendBalance.toString());
 
   return [
     { value: Number(tokenBalance / 10 ** 18).toFixed(2), coin: "$1EARTH" },
@@ -85,7 +115,6 @@ export const getMarketNFTs = async () => {
     })
   );
 
-  console.log(tokens, "market");
   return { tokens, floorPrice };
 };
 
@@ -145,6 +174,40 @@ export const checkAllowance = async (userAddress) => {
   return marketAllowance > 0;
 };
 
+// VESTING VIEW FUNCTIONS
+
+export const getTokensHold = async (userAddress) => {
+  let tokens = await vestingContract.getTokensHold(userAddress);
+
+  return tokens;
+};
+
+// VESTING WRITE FUNCTIONS
+
+export const claimAirdrop = async () => {
+  try {
+    let provider = new ethers.providers.Web3Provider(window.ethereum);
+    let signer = provider.getSigner(0);
+
+    let newVestingContract = new ethers.Contract(
+      vestingAddress,
+      ["function claim() external"],
+      signer
+    );
+
+    let tx = await newVestingContract.claim();
+
+    let receipt = await tx.wait();
+
+    return receipt;
+  } catch (error) {
+    console.log(error);
+    if (error.data) {
+      window.alert(error.data.message);
+    }
+  }
+};
+
 // MARKETPLACE WRITE FUNCTIONS
 
 export const createOrder = async (_tokenId, _price) => {
@@ -157,7 +220,6 @@ export const createOrder = async (_tokenId, _price) => {
 
     let receipt = await tx.wait();
 
-    console.log(receipt);
     return receipt;
   } catch (error) {
     console.log(error);
@@ -175,7 +237,6 @@ export const cancelOrder = async (_tokenId) => {
 
     let receipt = await tx.wait();
 
-    console.log(receipt);
     return receipt;
   } catch (error) {
     console.log(error, "cancelOrder");
@@ -195,7 +256,6 @@ export const updateOrder = async (_tokenId, _price) => {
 
     let receipt = await tx.wait();
 
-    console.log(receipt);
     return receipt;
   } catch (error) {
     console.log(error, "updateOrder");
@@ -213,7 +273,6 @@ export const executeOrder = async (_tokenId, value) => {
 
     let receipt = await tx.wait();
 
-    console.log(receipt);
     return receipt;
   } catch (error) {
     console.log(error, "executeOrder");
@@ -233,7 +292,6 @@ export const placeBid = async (_tokenId, price) => {
 
     let receipt = await tx.wait();
 
-    console.log(receipt);
     return receipt;
   } catch (error) {
     console.log(error, "placeBid");
@@ -251,7 +309,6 @@ export const cancelBid = async (_tokenId) => {
 
     let receipt = await tx.wait();
 
-    console.log(receipt);
     return receipt;
   } catch (error) {
     console.log(error, "cancelBid");
@@ -269,7 +326,6 @@ export const acceptBid = async (_tokenId) => {
 
     let receipt = await tx.wait();
 
-    console.log(receipt);
     return receipt;
   } catch (error) {
     console.log(error, "acceptBid");
@@ -298,7 +354,6 @@ export const claim = async () => {
 
     let receipt = await tx.wait();
 
-    console.log(receipt);
     return receipt;
   } catch (error) {
     console.log(error, "claim");
@@ -319,12 +374,11 @@ export const increaseAllowance = async () => {
 
     const receipt = await tx.wait();
     if (receipt) {
-      console.log(receipt);
       return true;
     }
   } catch (error) {
     console.log(error);
-    throw "Allowance not approved!";
+    throw error;
   }
 };
 
@@ -347,7 +401,6 @@ export const claimRewards = async (_tokenIds) => {
 
     let receipt = await tx.wait();
 
-    console.log(receipt);
     return receipt;
   } catch (error) {
     console.log(error, "claimRewards");
@@ -365,7 +418,6 @@ export const claimReflections = async (_tokenIds) => {
 
     let receipt = await tx.wait();
 
-    console.log(receipt);
     return receipt;
   } catch (error) {
     console.log(error, "claimReflections");
@@ -379,7 +431,7 @@ export const mintNFT = async (amount) => {
   try {
     let newNftContract = await nftContractInstance();
 
-    let value = ethers.utils.parseUnits((amount * 0.1).toString());
+    let value = ethers.utils.parseUnits((amount * 0.2).toString());
 
     let tx = await newNftContract.mint(amount, {
       value,
@@ -388,7 +440,6 @@ export const mintNFT = async (amount) => {
 
     let receipt = await tx.wait();
 
-    console.log(receipt);
     return receipt;
   } catch (error) {
     console.log(error, "mint");
@@ -406,12 +457,11 @@ export const approveERC721 = async () => {
 
     const receipt = await tx.wait();
     if (receipt) {
-      console.log(receipt);
       return true;
     }
   } catch (error) {
     console.log(error, "approveERC721");
-    throw "Allowance not approved!";
+    throw error;
   }
 };
 

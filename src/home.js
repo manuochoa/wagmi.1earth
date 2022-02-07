@@ -24,10 +24,12 @@ function Home() {
         method: "eth_chainId",
       });
 
-      if (chainId !== "0xa869") {
+      console.log(chainId);
+
+      if (chainId !== "0xa86a") {
         await window.ethereum.request({
           method: "wallet_switchEthereumChain",
-          params: [{ chainId: "0xa869" }],
+          params: [{ chainId: "0xa86a" }],
         });
       }
 

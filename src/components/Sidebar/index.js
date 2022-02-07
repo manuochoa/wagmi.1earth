@@ -5,36 +5,15 @@ import {
   Col,
   Dropdown,
   DropdownButton,
-  Form,
-  InputGroup,
   Nav,
   Row,
-  Tab,
-  Tabs,
 } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Range } from "rc-slider";
 import "rc-slider/assets/index.css";
 import "./styles.css";
-import {
-  buyTokens,
-  checkAllowance,
-  increaseAllowance,
-} from "../../blockchain/functions";
 
 import Logo from "../../assets/Images/logo.png";
-import playIcon from "../../assets/Images/icons/play.png";
-import imageIcon from "../../assets/Images/icons/Image.png";
-import musicIcon from "../../assets/Images/icons/music.png";
-import arrowRight from "../../assets/Images/icons/arrow-right.png";
-import diamond from "../../assets/Images/icons/diamond.png";
-import platinum from "../../assets/Images/icons/platinum.png";
-import gold from "../../assets/Images/icons/gold.png";
-import silver from "../../assets/Images/icons/silver.png";
-import bronze from "../../assets/Images/icons/bronze.png";
 import dropdownIcon from "../../assets/Images/icons/dropdown.png";
-import userAvatar from "../../assets/Images/user-avatar-large.png";
-import scanIcon from "../../assets/Images/icons/scan.png";
 import avaxLogo from "../../assets/Images/avax-logo.png";
 
 const Sidebar = (props) => {
@@ -42,7 +21,6 @@ const Sidebar = (props) => {
     floorPrice,
     isAccount,
     onAccountTabChange,
-    userAddress,
     rarityFilter,
     setRarityFilter,
     priceFilter,
@@ -54,25 +32,7 @@ const Sidebar = (props) => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState("items");
-  const [itemsActiveTab, setItemsActiveTab] = useState("gift");
   const [activeAccountTab, setActiveAccountTab] = useState("account");
-
-  const tickets = [
-    { value: 1 },
-    { value: 2 },
-    { value: 3 },
-    { value: 5 },
-    { value: 10 },
-  ];
-
-  const licenses = [
-    { value: 10 },
-    { value: 100 },
-    { value: 1000 },
-    { value: 10000 },
-    { value: 100000 },
-  ];
 
   const onChangeAccountTab = (tab) => {
     setActiveAccountTab(tab);
@@ -184,66 +144,6 @@ const Sidebar = (props) => {
             <Dropdown.Item eventKey="Reptile">Reptile</Dropdown.Item>
           </DropdownButton>
         </Col>
-        {/* <Col xs={12}>
-          <h6 className="text-uppercase mt-2 text-nft-light">Rarity</h6>
-        </Col>
-        <Col xs={6}>
-          <InputGroup className="mb-2 mt-2">
-            <InputGroup.Checkbox
-              onChange={(e) => handleChange(e, "Common")}
-              aria-label="Common"
-            />
-            <h6>
-              <Badge className="rarity-badge">Common</Badge>
-            </h6>
-          </InputGroup>
-        </Col>
-        <Col xs={6}>
-          <InputGroup className="mb-2 mt-2">
-            <InputGroup.Checkbox
-              onChange={(e) => handleChange(e, "Endangered")}
-              aria-label="Endangered"
-            />
-            <h6>
-              <Badge className="rarity-badge nft-Endangered">Endangered</Badge>
-            </h6>
-          </InputGroup>
-        </Col>
-        <Col xs={6}>
-          <InputGroup className="mb-2 mt-2">
-            <InputGroup.Checkbox
-              onChange={(e) => handleChange(e, "Shiny")}
-              aria-label="Shiny"
-            />
-            <h6>
-              <Badge className="rarity-badge nft-Shiny">Shiny</Badge>
-            </h6>
-          </InputGroup>
-        </Col>
-        <Col xs={6}>
-          <InputGroup className="mb-2 mt-2">
-            <InputGroup.Checkbox
-              onChange={(e) => handleChange(e, "Unique")}
-              aria-label="Unique"
-            />
-            <h6>
-              <Badge className="rarity-badge nft-Unique">Unique</Badge>
-            </h6>
-          </InputGroup>
-        </Col>
-        <Col xs={8}>
-          <InputGroup className="mb-2 mt-2">
-            <InputGroup.Checkbox
-              onChange={(e) => handleChange(e, "shiny Endangered")}
-              aria-label="Shiny Endangered"
-            />
-            <h6>
-              <Badge className="rarity-badge nft-sEndangered">
-                Shiny Endangered
-              </Badge>
-            </h6>
-          </InputGroup>
-        </Col> */}
         <Col className="d-flex align-items-center mt-4" xs={12}>
           <h6 className="text-uppercase mt-2 text-nft-light">
             Floor Price: {Number(floorPrice) / 10 ** 18}
@@ -345,7 +245,6 @@ const Sidebar = (props) => {
             </Nav.Item>
             <Nav.Item className="mt-5 account-btn market-tab">
               <Button
-                // disabled={isLoading}
                 onClick={onClickMarketplace}
                 className="marketplace-button"
               >

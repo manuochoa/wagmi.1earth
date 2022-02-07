@@ -1,18 +1,8 @@
-import React, { useState, useEffect } from "react";
-import {
-  Col,
-  Container,
-  DropdownButton,
-  Dropdown,
-  Row,
-  Button,
-  Card,
-  Badge,
-} from "react-bootstrap";
+import React, { useState } from "react";
+import { Col, Container, Row, Button, Badge } from "react-bootstrap";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import ItemCard from "./components/ItemCard";
-import SaleInfoCard from "./components/SaleInfoCard";
 import NumberFormat from "react-number-format";
 import avaxLogo from "./assets/Images/avax-logo.png";
 
@@ -21,14 +11,7 @@ import "./App.css";
 
 import arrowLeft from "./assets/Images/icons/arrow-left.png";
 
-import {
-  getMarketNFTs,
-  executeOrder,
-  placeBid,
-  cancelBid,
-  checkAllowance,
-  increaseAllowance,
-} from "./blockchain/functions";
+import { executeOrder, placeBid, cancelBid } from "./blockchain/functions";
 
 function App({
   userAddress,
@@ -43,42 +26,11 @@ function App({
   const [activeItem, setActiveItem] = useState(0);
   const [isPreviewItem, setIsPreviewItem] = useState(false);
   const [bid, setBid] = useState("");
-  const [marketsAllowance, setMarketsAllowance] = useState({
-    marketAllowance: false,
-    bundlerAllowance: false,
-  });
   const [rarityFilter, setRarityFilter] = useState("All");
   const [classFilter, setClassFilter] = useState("All");
   const [priceFilter, setPriceFilter] = useState("All");
 
   const [isLoading, setIsLoading] = useState(false);
-
-  const itemSaleHistory = [
-    {
-      buyerName: "cutepapyboy",
-      buyerId: "ronin:4568f...15ad",
-      sellerName: "Kush | HA",
-      sellerId: "ronin:4568f...15ad",
-      price: "0.023 ETH",
-      date: "Jul, 5 2022",
-    },
-    {
-      buyerName: "cutepapyboy",
-      buyerId: "ronin:4568f...15ad",
-      sellerName: "Kush | HA",
-      sellerId: "ronin:4568f...15ad",
-      price: "0.023 ETH",
-      date: "Jul, 5 2022",
-    },
-    {
-      buyerName: "cutepapyboy",
-      buyerId: "ronin:4568f...15ad",
-      sellerName: "Kush | HA",
-      sellerId: "ronin:4568f...15ad",
-      price: "0.023 ETH",
-      date: "Jul, 5 2022",
-    },
-  ];
 
   const handleBuy = async (item) => {
     setIsLoading(true);
@@ -290,16 +242,6 @@ function App({
                 <div className="d-flex mt-3">
                   <h4>Collection: Nicaragua</h4>
                 </div>
-                {/* <div className="owner-detail mt-2 d-flex align-items-center ">
-                  <h4 className="mr-3">
-                    Pending Rewards: {item.pendingRewards} AVAX
-                  </h4>
-                </div>
-                <div className="owner-detail mt-2 d-flex align-items-center ">
-                  <h4 className="mr-3">
-                    Pending Reflections: {item.pendingReflections} $1EARTH
-                  </h4>
-                </div> */}
               </div>
             </Col>
             <Col xs={6}>
