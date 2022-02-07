@@ -50,6 +50,7 @@ const Account = ({
   const [marketAllowance, setMarketAllowance] = useState(false);
   const [amountToMint, setAmountToMint] = useState("1");
   const [tokensHold, setTokensHold] = useState("");
+  const [tokensClaimed, setTokensClaimed] = useState(true);
 
   const getInventoryNFTs = async () => {
     let totalSupply = await getMintedNFTs();
@@ -203,10 +204,11 @@ const Account = ({
   const checkAllowance = async (_tokenId) => {
     if (userAddress) {
       let result = await checkERC721Allowance(userAddress);
-      let tokensUserHold = await getTokensHold(userAddress);
-      if (result || tokensUserHold) {
+      let airdrop = await getTokensHold(userAddress);
+      if (result || airdrop) {
         setMarketAllowance(result);
-        setTokensHold(tokensUserHold);
+        setTokensHold(airdrop.tokens);
+        setTokensClaimed(airdrop.claimed);
       }
     }
   };
@@ -656,7 +658,10 @@ const Account = ({
               </div>
               <h5> Claim your tokens</h5>
 
-              <button disabled={isLoading} onClick={handleAirdrop}>
+              <button
+                disabled={isLoading || tokensClaimed}
+                onClick={handleAirdrop}
+              >
                 Claim
               </button>
             </div>

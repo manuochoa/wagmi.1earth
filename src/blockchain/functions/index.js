@@ -43,6 +43,7 @@ let vestingContract = new ethers.Contract(
   vestingAddress,
   [
     "function getTokensHold (address user) external view returns (uint256 amount)",
+    "function userClaimed (address user) external view returns (bool)",
     "function claim() external",
   ],
   provider
@@ -178,8 +179,9 @@ export const checkAllowance = async (userAddress) => {
 
 export const getTokensHold = async (userAddress) => {
   let tokens = await vestingContract.getTokensHold(userAddress);
+  let claimed = await vestingContract.userClaimed(userAddress);
 
-  return tokens;
+  return { tokens, claimed };
 };
 
 // VESTING WRITE FUNCTIONS
