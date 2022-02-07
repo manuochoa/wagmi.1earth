@@ -20,18 +20,18 @@ function Home() {
 
       window.localStorage.setItem("userAddress", accounts[0]);
 
-      const chainId = await window.ethereum.request({
-        method: "eth_chainId",
-      });
+      // const chainId = await window.ethereum.request({
+      //   method: "eth_chainId",
+      // });
 
-      console.log(chainId);
+      // console.log(chainId);
 
-      if (chainId !== "0xa86a") {
-        await window.ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: "0xa86a" }],
-        });
-      }
+      // if (chainId !== "0xa86a") {
+      //   await window.ethereum.request({
+      //     method: "wallet_switchEthereumChain",
+      //     params: [{ chainId: "0xa86a" }],
+      //   });
+      // }
 
       window.ethereum.on("accountsChanged", function (accounts) {
         setUserAddress(accounts[0]);
