@@ -170,7 +170,6 @@ const Account = ({
 
     let result = await claimAirdrop();
     if (result) {
-      console.log(result);
       loadUserBalances();
       checkAllowance();
     }
