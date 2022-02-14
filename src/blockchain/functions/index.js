@@ -28,7 +28,7 @@ let marketAddress = "0x8b9297e28d082db2c50C5167a1F797c2F7dcd463";
 let tokenAddress = "0x00055bdAdA10734bff62647dcE3A32CB03762a05";
 let NFTAddress = "0x92757f5E76adEcA68D88146269b0cAc350d8FD53";
 let dividenTrackerAddress = "0x2D1E692e38fE27C5408dD1a00ecBfb1Ef626C646";
-let vestingAddress = "0x7d6a134C93416b91403Ce77C55A29314F58943cF";
+let vestingAddress = "0xEA00EA7C0381cb3eDD676BE4C13533A70C064AC4";
 
 // TESTNET AVAX
 // let marketAddress = "0x367cD097Ce16Bfde52F17A144C58421E46dEc59E";
@@ -42,8 +42,8 @@ let tokenContract = new ethers.Contract(tokenAddress, tokenAbi, provider);
 let vestingContract = new ethers.Contract(
   vestingAddress,
   [
-    "function getTokensHold (address user) external view returns (uint256 amount)",
-    "function userClaimed (address user) external view returns (bool)",
+    "function isWhitelisted (address user) external view returns (bool)",
+    "function userClaimed  (address user) external view returns (bool)",
     "function claim() external",
   ],
   provider
@@ -177,11 +177,11 @@ export const checkAllowance = async (userAddress) => {
 
 // VESTING VIEW FUNCTIONS
 
-export const getTokensHold = async (userAddress) => {
-  let tokens = await vestingContract.getTokensHold(userAddress);
-  let claimed = await vestingContract.userClaimed(userAddress);
+export const checkIsWhitelisted = async (userAddress) => {
+  let isWhitelisted = await vestingContract.isWhitelisted(userAddress);
+  let isClaimed = await vestingContract.userClaimed(userAddress);
 
-  return { tokens, claimed };
+  return { isWhitelisted, isClaimed };
 };
 
 // VESTING WRITE FUNCTIONS

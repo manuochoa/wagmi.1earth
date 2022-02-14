@@ -22,8 +22,8 @@ import {
   claimReflections,
   mintNFT,
   getMintedNFTs,
-  getTokensHold,
   claimAirdrop,
+  checkIsWhitelisted,
 } from "../../blockchain/functions";
 
 const Account = ({
@@ -49,8 +49,8 @@ const Account = ({
   const [price, setPrice] = useState("");
   const [marketAllowance, setMarketAllowance] = useState(false);
   const [amountToMint, setAmountToMint] = useState("1");
-  const [tokensHold, setTokensHold] = useState("");
-  const [tokensClaimed, setTokensClaimed] = useState(true);
+  const [isWhitelisted, setIsWhitelisted] = useState(false);
+  const [isClaimed, steIsClaimed] = useState(false);
 
   const getInventoryNFTs = async () => {
     let totalSupply = await getMintedNFTs();
@@ -172,6 +172,7 @@ const Account = ({
     if (result) {
       console.log(result);
       loadUserBalances();
+      checkAllowance();
     }
 
     setIsLoading(false);
@@ -204,11 +205,13 @@ const Account = ({
   const checkAllowance = async (_tokenId) => {
     if (userAddress) {
       let result = await checkERC721Allowance(userAddress);
-      let airdrop = await getTokensHold(userAddress);
+      let airdrop = await checkIsWhitelisted(userAddress);
+
+      console.log("airdrop", airdrop);
+      setIsWhitelisted(airdrop.isWhitelisted);
+      steIsClaimed(airdrop.isClaimed);
       if (result || airdrop) {
         setMarketAllowance(result);
-        setTokensHold(airdrop.tokens);
-        setTokensClaimed(airdrop.claimed);
       }
     }
   };
@@ -643,6 +646,42 @@ const Account = ({
               <button disabled={isLoading} onClick={handleMint}>
                 Mint
               </button>
+            </div>
+          </Col>
+          <Col xs={4} className="mt-4"></Col>
+        </Row>
+        <Row className="mb-4">
+          <Col xs={4} className="mt-4"></Col>
+          <Col xs={4} className="mt-4 pb-3 dashboard-block">
+            <div className="mt-3">
+              <h4>Airdrop</h4>
+              {isWhitelisted ? (
+                isClaimed ? (
+                  <h4>Airdrop already claimed</h4>
+                ) : (
+                  <>
+                    <h4>You're on the whitelist</h4>
+                    <div className="price-container">
+                      <h4 className="d-flex justify-content-center align-items-center">
+                        100
+                        <img
+                          className="price-logo"
+                          src={earthLogo}
+                          alt="avax-logo"
+                        />
+                      </h4>
+                    </div>
+                    <button
+                      disabled={isLoading || !isWhitelisted}
+                      onClick={handleAirdrop}
+                    >
+                      Claim
+                    </button>
+                  </>
+                )
+              ) : (
+                <h4>You're not on the whitelist</h4>
+              )}
             </div>
           </Col>
           <Col xs={4} className="mt-4"></Col>
