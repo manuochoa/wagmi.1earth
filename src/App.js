@@ -188,12 +188,14 @@ function App({
                 <h3 className="item-name">{item.metadata.name}</h3>
                 <div className="item-price d-flex align-items-center">
                   <div className="price-container">
-                    <h1 className="me-3">{item.itemInfo?.price / 10 ** 18}</h1>
-                    <img
+                    <h1 className="me-3">
+                      {item.itemInfo?.price / 10 ** 18} WGM
+                    </h1>
+                    {/* <img
                       className="price-logo-main"
                       src={avaxLogo}
                       alt="avax-logo"
-                    />
+                    /> */}
                   </div>
                 </div>
                 <Button

@@ -146,9 +146,9 @@ const Sidebar = (props) => {
         </Col>
         <Col className="d-flex align-items-center mt-4" xs={12}>
           <h6 className="text-uppercase mt-2 text-nft-light">
-            Floor Price: {Number(floorPrice) / 10 ** 18}
+            Floor Price: {Number(floorPrice) / 10 ** 18} WGM
           </h6>
-          <img className="price-logo" src={avaxLogo} alt="avax-logo" />
+          {/* <img className="price-logo" src={avaxLogo} alt="avax-logo" /> */}
         </Col>
       </Row>
     );
@@ -250,6 +250,15 @@ const Sidebar = (props) => {
               >
                 Marketplace
               </Button>
+            </Nav.Item>
+            <Nav.Item className="mt-5 account-btn market-tab">
+              <a
+                href="https://1earth.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button className="marketplace-button">Mainnet</Button>
+              </a>
             </Nav.Item>
           </div>
         ) : (

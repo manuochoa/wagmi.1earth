@@ -24,9 +24,9 @@ let provider = new ethers.providers.JsonRpcProvider(
 // let dividenTrackerAddress = "0x66F56D8A954Bc668145F92a40a54807b2cd9cAde";
 
 // TESTNET WAGMI
-let marketAddress = "0x81e14EacEC2a9f7865d1933FbCC4a382Caf1DBC3";
+let marketAddress = "0x8b9297e28d082db2c50C5167a1F797c2F7dcd463";
 let tokenAddress = "0x00055bdAdA10734bff62647dcE3A32CB03762a05";
-let NFTAddress = "0xEe73Db920d392A89F5b016E86D3507Bbd7946936";
+let NFTAddress = "0x92757f5E76adEcA68D88146269b0cAc350d8FD53";
 let dividenTrackerAddress = "0x2D1E692e38fE27C5408dD1a00ecBfb1Ef626C646";
 let vestingAddress = "0x7d6a134C93416b91403Ce77C55A29314F58943cF";
 
@@ -60,11 +60,11 @@ export const getUserBalances = async (userAddress) => {
 
   return [
     { value: Number(tokenBalance / 10 ** 18).toFixed(2), coin: "$1EARTH" },
-    { value: Number(avaxValance / 10 ** 18).toFixed(4), coin: "AVAX" },
-    {
-      value: Number(withdrawableDividend / 10 ** 18).toFixed(6),
-      coin: "Market Reflections",
-    },
+    { value: Number(avaxValance / 10 ** 18).toFixed(4), coin: "WGM" },
+    // {
+    //   value: Number(withdrawableDividend / 10 ** 18).toFixed(6),
+    //   coin: "Market Reflections",
+    // },
   ];
 };
 

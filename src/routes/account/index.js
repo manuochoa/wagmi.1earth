@@ -400,13 +400,13 @@ const Account = ({
                   <div className="item-price d-flex align-items-center">
                     <div className="price-container">
                       <h1 className="me-3">
-                        {item.itemInfo?.price / 10 ** 18}
+                        {item.itemInfo?.price / 10 ** 18} WGM
                       </h1>
-                      <img
+                      {/* <img
                         className="price-logo-main"
                         src={avaxLogo}
                         alt="avax-logo"
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
@@ -608,15 +608,15 @@ const Account = ({
       <div className="activity-section">
         <SectionHeader headerTitle="Home" />
         <Row className="mb-4">
-          <Col xs={1} className="mt-4"></Col>
+          <Col xs={4} className="mt-4"></Col>
           <Col xs={4} className="mt-4 pb-3 dashboard-block">
             <div className="mt-3">
               <h4>Total NFTs minted: {minted}/2763</h4>
               <h4>Mint a new NFT</h4>
               <div className="price-container">
                 <h4 className="d-flex justify-content-center align-items-center">
-                  {2 * amountToMint}{" "}
-                  <img className="price-logo" src={avaxLogo} alt="avax-logo" />
+                  {1 * amountToMint} WGM
+                  {/* <img className="price-logo" src={avaxLogo} alt="avax-logo" /> */}
                 </h4>
               </div>
               <div className="d-flex flex-row align-items-center justify-content-center">
@@ -645,75 +645,7 @@ const Account = ({
               </button>
             </div>
           </Col>
-          <Col xs={2} className="mt-4"></Col>
-          <Col xs={4} className="mt-4 pb-3 dashboard-block">
-            <div className="mt-3">
-              <h4>Claim $1EARTH Tokens</h4>
-              <h4>You hold {tokensHold.toString()} tokens</h4>
-              <div className="price-container">
-                <h4 className="d-flex justify-content-center align-items-center">
-                  {tokensClaimed ? "0" : 100 * tokensHold}
-                  <img className="price-logo" src={earthLogo} alt="avax-logo" />
-                </h4>
-              </div>
-              <h5> Claim your tokens</h5>
-
-              <button
-                disabled={isLoading || tokensClaimed}
-                onClick={handleAirdrop}
-              >
-                Claim
-              </button>
-            </div>
-          </Col>
-          <Col xs={1} className="mt-4"></Col>
-        </Row>
-        <Row>
-          <Col xs={3} className="mt-4 pb-3 dashboard-block">
-            <div className="mt-3">
-              <h4>Minting Reflections</h4>
-              <h5>(For NFT holders)</h5>
-              <h4 className="d-flex justify-content-center align-items-center">
-                {userRewards.userAvaxRewards}{" "}
-                <img className="price-logo" src={avaxLogo} alt="avax-logo" />
-              </h4>
-              <h5> Claim your rewards</h5>
-              <button disabled={isLoading} onClick={handleClaimRewards}>
-                Claim
-              </button>
-            </div>
-          </Col>
-          <Col xs={1} className="mt-4"></Col>
-
-          <Col xs={4} className="mt-4 pb-3 dashboard-block">
-            <div className="mt-3">
-              <h4>Secondary Market Reflections:</h4>
-              <h5>(For 1EARTH holders)</h5>
-              <h4 className="d-flex justify-content-center align-items-center">
-                {userBalances[2]?.value}{" "}
-                <img className="price-logo" src={avaxLogo} alt="avax-logo" />
-              </h4>
-              <h5> Claim your rewards</h5>
-              <button disabled={isLoading} onClick={handleClaim}>
-                Claim
-              </button>
-            </div>
-          </Col>
-          <Col xs={1} className="mt-4"></Col>
-          <Col xs={3} className="mt-4 pb-3 dashboard-block">
-            <div className="mt-3">
-              <h4>1EARTH Reflections</h4>
-              <h5>(For NFT holders)</h5>
-              <h4 className="d-flex justify-content-center align-items-center">
-                {userRewards.userEarthReflections}{" "}
-                <img className="price-logo" src={earthLogo} alt="earth-logo" />
-              </h4>
-              <h5> Claim your rewards</h5>
-              <button disabled={isLoading} onClick={handleClaimReflections}>
-                Claim
-              </button>
-            </div>
-          </Col>
+          <Col xs={4} className="mt-4"></Col>
         </Row>
       </div>
     );
