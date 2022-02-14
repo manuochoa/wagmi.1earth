@@ -685,6 +685,53 @@ const Account = ({
           </Col>
           <Col xs={4} className="mt-4"></Col>
         </Row>
+        <Row>
+          <Col xs={3} className="mt-4 pb-3 dashboard-block">
+            <div className="mt-3">
+              <h4>Minting Reflections</h4>
+              <h5>(For NFT holders)</h5>
+              <h4 className="d-flex justify-content-center align-items-center">
+                {userRewards.userAvaxRewards}{" "}
+                <img className="price-logo" src={avaxLogo} alt="avax-logo" />
+              </h4>
+              <h5> Claim your rewards</h5>
+              <button disabled={isLoading} onClick={handleClaimRewards}>
+                Claim
+              </button>
+            </div>
+          </Col>
+          <Col xs={1} className="mt-4"></Col>
+
+          <Col xs={4} className="mt-4 pb-3 dashboard-block">
+            <div className="mt-3">
+              <h4>Secondary Market Reflections:</h4>
+              <h5>(For 1EARTH holders)</h5>
+              <h4 className="d-flex justify-content-center align-items-center">
+                {userBalances[2]?.value}{" "}
+                <img className="price-logo" src={avaxLogo} alt="avax-logo" />
+              </h4>
+              <h5> Claim your rewards</h5>
+              <button disabled={isLoading} onClick={handleClaim}>
+                Claim
+              </button>
+            </div>
+          </Col>
+          <Col xs={1} className="mt-4"></Col>
+          <Col xs={3} className="mt-4 pb-3 dashboard-block">
+            <div className="mt-3">
+              <h4>1EARTH Reflections</h4>
+              <h5>(For NFT holders)</h5>
+              <h4 className="d-flex justify-content-center align-items-center">
+                {userRewards.userEarthReflections}{" "}
+                <img className="price-logo" src={earthLogo} alt="earth-logo" />
+              </h4>
+              <h5> Claim your rewards</h5>
+              <button disabled={isLoading} onClick={handleClaimReflections}>
+                Claim
+              </button>
+            </div>
+          </Col>
+        </Row>
       </div>
     );
   };

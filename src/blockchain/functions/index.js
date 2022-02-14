@@ -24,11 +24,11 @@ let provider = new ethers.providers.JsonRpcProvider(
 // let dividenTrackerAddress = "0x66F56D8A954Bc668145F92a40a54807b2cd9cAde";
 
 // TESTNET WAGMI
-let marketAddress = "0x8b9297e28d082db2c50C5167a1F797c2F7dcd463";
-let tokenAddress = "0x00055bdAdA10734bff62647dcE3A32CB03762a05";
-let NFTAddress = "0x92757f5E76adEcA68D88146269b0cAc350d8FD53";
-let dividenTrackerAddress = "0x2D1E692e38fE27C5408dD1a00ecBfb1Ef626C646";
-let vestingAddress = "0xEA00EA7C0381cb3eDD676BE4C13533A70C064AC4";
+let marketAddress = "0x64492a5A53f7C1C090F1C97E894022de1e321a81";
+let tokenAddress = "0xF67a2886d92FC0E51885B04879D0396E3178cF40";
+let NFTAddress = "0x28886C374dC044666E0Ab48e8951f4d6DBc82d6d";
+let dividenTrackerAddress = "0xf9dF96631e89c43ff506D864043416d90FF58d3f";
+let vestingAddress = "0x88E3C7D15589ab62b0268ac6122Dd6456CE2001f";
 
 // TESTNET AVAX
 // let marketAddress = "0x367cD097Ce16Bfde52F17A144C58421E46dEc59E";
@@ -61,10 +61,10 @@ export const getUserBalances = async (userAddress) => {
   return [
     { value: Number(tokenBalance / 10 ** 18).toFixed(2), coin: "$1EARTH" },
     { value: Number(avaxValance / 10 ** 18).toFixed(4), coin: "WGM" },
-    // {
-    //   value: Number(withdrawableDividend / 10 ** 18).toFixed(6),
-    //   coin: "Market Reflections",
-    // },
+    {
+      value: Number(withdrawableDividend / 10 ** 18).toFixed(6),
+      coin: "Market Reflections",
+    },
   ];
 };
 
